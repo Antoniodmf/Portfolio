@@ -1,0 +1,182 @@
+@font-face {
+  font-family: NeueHaasUnicaProMedium;
+  src: url("../fonts/NeueHaasUnicaProMedium.otf");
+}
+
+body {
+  background-color: brown;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: NeueHaasUnicaProMedium;
+}
+
+.custom-navbar {
+  background: rgba(255, 255, 255, 1); /* transparent white */
+  backdrop-filter: blur(5px); /* glass-like blur effect */
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1030;
+}
+
+/* when scrolled down a bit, make it more solid with a shadow */
+.custom-navbar.scrolled {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+header {
+  padding-top: 0.5%;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-bottom: 0.5%;
+  a {
+    align-items: left;
+    text-align: left;
+    color: black;
+    text-decoration: none;
+  }
+  @media (max-width: 900px) {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 2.5%;
+    padding-right: 3%;
+  }
+}
+
+#img-carousel {
+  object-fit: cover;
+  width: 100%;
+  height: 80vh;
+}
+
+.reverse-scale {
+  width: calc(600px + (900px - 80vw)); /* grows as window shrinks */
+  min-width: 20vw;
+  max-width: 80vw;
+  aspect-ratio: 16 / 9;
+  margin-top: 5vh;
+  transition: width 0.3s ease;
+  object-fit: cover;
+}
+
+#activities-2ndrow {
+  @media (max-width: 991px) {
+    display: none;
+  }
+}
+
+.card-custom {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.card-custom:hover {
+  transform: scale(105%);
+  transition: 0.3s ease;
+  box-shadow: 0 0 100px teal;
+}
+
+.navbar-nav .nav-link:hover {
+  color: brown;
+}
+
+.diag-line {
+  height: 60px;
+  width: 100vw;
+  background-color: white;
+  clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+  margin-top: 50px;
+  margin-bottom: -1px;
+}
+
+.diag-line2 {
+  height: 60px;
+  width: 100vw;
+  background-color: white;
+  clip-path: polygon(0 100%, 100% 0, 0 0, 0 100%);
+  margin-top: -1px;
+}
+
+.square-img {
+  aspect-ratio: 1 / 1;
+  width: 15vw;
+  margin: 1%;
+  object-fit: cover;
+
+  @media (max-width: 1000px) {
+    width: 40vw;
+  }
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+
+.image-container .overlay-text {
+  width: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: whitesmoke;
+  font-size: 1rem;
+  opacity: 0; /* hidden by default */
+  transition: opacity 0.6s ease;
+  text-align: justify;
+  pointer-events: none; /* so hover still triggers on the container */
+}
+
+.image-container:hover .overlay-text {
+  opacity: 1;
+}
+
+.btn-download {
+  background-color: rgb(42, 165, 165);
+  color: black;
+  border: none;
+  font-weight: 600;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-download:hover {
+  background-color: rgba(42, 165, 104, 1.1);
+  box-shadow: 0 0 15px rgba(42, 165, 104);
+}
+
+.rodape {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background-image: url("../images/EPHATA.jpeg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  height: 110vh;
+}
+
+.form-control {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.1); /* make text visible on dark backgrounds */
+  border: 3px solid rgba(255, 255, 255, 0.1); /* keep a visible outline */
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5); /* softer placeholder */
+}
+
+.form-control:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* softer placeholder */
+}
+
+.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.1); /* slight tint when focused */
+  box-shadow: none; /* remove default Bootstrap glow */
+  border-color: transparent;
+}

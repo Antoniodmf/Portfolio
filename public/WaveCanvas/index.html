@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Visualização de Áudio</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/9108ba1cfe.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Sistema de Visualização de Áudio</h1>
+      </header>
+
+      <main>
+        <section id="controls">
+          <div class="control-group">
+            <h3>Controlos de Áudio</h3>
+            <button id="startMic" class="btn-primary">Iniciar Microfone</button>
+            <button id="stopAudio" class="btn-primary" disabled>
+              Parar Áudio
+            </button>
+            <input type="file" id="audioFile" accept="audio/*" />
+          </div>
+
+          <div class="control-group">
+            <h3>Visualização</h3>
+            <select id="visualizationType">
+              <option value="spectrum">Espectro de Frequências</option>
+              <option value="waveform">Forma de Onda</option>
+              <option value="particles">Partículas</option>
+              <option value="circular">Circular</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <h3>Exportação</h3>
+            <button id="exportPNG" class="btn-primary">Exportar PNG</button>
+            <button id="exportJPEG" class="btn-primary">Exportar JPEG</button>
+          </div>
+        </section>
+
+        <section id="visualization-area">
+          <div id="canvasWrapper">
+            <canvas id="audioCanvas"></canvas>
+            <button id="fullScreenBtn">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+          <div id="audioInfo">
+            <p id="audioStatus">Áudio: Parado</p>
+            <button
+              id="resumeAudio"
+              type="button"
+              class="btn-primary btn-sm"
+              style="
+                --bs-btn-padding-y: 0.1rem;
+                --bs-btn-padding-x: 0.5rem;
+                --bs-btn-font-size: 0.5rem;
+              "
+              disabled
+            >
+              <i class="fa-solid fa-lg fa-pause"> </i>
+            </button>
+          </div>
+        </section>
+
+        <section id="properties-panel">
+          <h3>Propriedades da Visualização</h3>
+          <div id="properties-container" class="row">
+            <div id="volumeAudio" class="col-9 mx-auto">
+              <label for="range4" class="form-label"
+                >Volume de Reprodução:
+              </label>
+              <output for="range4" id="rangeValue" aria-hidden="true"></output>
+              <input
+                type="range"
+                class="form-range"
+                min="0"
+                max="100"
+                value="50"
+                id="range4"
+              />
+            </div>
+            <div class="col justify-content-center">
+              <label for="freqGenerator" class="form-label"
+                >Gerador de Frequências</label
+              >
+              <input
+                type="number"
+                class="form-control text-center"
+                id="freqGenerator"
+                min="0"
+                max="10000"
+                step="50"
+              />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div id="errorModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h3>Erro</h3>
+          <p id="errorMessage"></p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./javascript/app.js"></script>
+  </body>
+</html>

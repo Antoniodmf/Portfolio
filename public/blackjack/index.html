@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Blackjack 50414</title>
+    <meta charset="UTF-8" />
+    <meta name="author" content="António Faustino - 50414" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row" style="margin-top: 3vh">
+        <div class="col" id="side-col">
+          <div class="row justify-content center" id="game-title">
+            <h1>Blackjack</h1>
+            <h3>2025</h3>
+          </div>
+
+          <div class="row justify-content-center">
+            <img src="images/BalatroDeck/DeckBack.png" id="card" alt="" />
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <div>
+              <a class="btn form-control btn-lg" id="new-game-button"
+                >New Game</a
+              >
+            </div>
+            <div id="play-buttons">
+              <a class="btn form-control btn-lg" id="draw-card-button"
+                >Draw Card</a
+              >
+              <a class="btn form-control btn-lg" id="stand-button">Stand</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-8 align-items-center">
+          <div>
+            <div id="house-pile" class="pile"></div>
+          </div>
+
+          <div class="row align-items-center">
+            <div id="player-pile" class="pile"></div>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="row">House Score:</div>
+          <div class="row" id="house-score">0</div>
+          <div class="row">Player Score:</div>
+          <div class="row" id="player-score">0</div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

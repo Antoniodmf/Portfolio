@@ -1,0 +1,15 @@
+project:
+  title: "audio dashboard"
+  type: website
+
+website:
+  title: "spotify-dashboard"
+  sidebar:
+    contents:
+      - href: index.qmd
+        text: Home
+
+format:
+  html:
+    css: "assets/css/styles.css"
+    toc: true

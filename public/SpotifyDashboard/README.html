@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>readme</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="README_files/libs/clipboard/clipboard.min.js"></script>
+<script src="README_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="README_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="README_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="README_files/libs/quarto-html/popper.min.js"></script>
+<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="README_files/libs/quarto-html/anchor.min.js"></script>
+<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="README_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="README_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="documentação-do-projeto" class="level1">
+<h1><strong>Documentação do Projeto</strong></h1>
+<p><strong>António Faustino - 50414</strong></p>
+<p>ISEL - LEIM</p>
+<section id="spotify-dashboard---quarto-ojs" class="level2">
+<h2 class="anchored" data-anchor-id="spotify-dashboard---quarto-ojs">Spotify Dashboard - Quarto OJS</h2>
+<p><img src="assets/images/Spotify_Full_Logo_RGB_Green.png" class="img-fluid"></p>
+</section>
+<section id="introdução" class="level2">
+<h2 class="anchored" data-anchor-id="introdução"><strong>Introdução</strong></h2>
+<p>Este projeto final visa consolidar as competências adquiridas nos Trabalhos Práticos 3 e 4, através do desenvolvimento de um dashboard interativo em Quarto que explora e visualiza conteúdos relacionados com áudio.</p>
+<p>Inicialmente e inspirado pelo projeto referenciado pelos docentes, <a href="https://melissavanbussel.github.io/spotify-dashboard/dashboard.html">Spotify Dashboard Example</a>, o objetivo era criar um dashboard que mostrasse métricas de músicas, utilizando a API do Spotify. Este objetivo rapidamente encontrou obstáculos ao descobrir que o Spotify removeu o acesso a estas métricas, tanto como a tantas outras finalidades. Acrescendo o facto de não ser possível gerar um token de acesso que dure mais de uma hora, limitando as <em>features</em> utilizáveis.</p>
+<p>Apesar destes contra-tempos foram desenvolvidos os seguintes painéis:</p>
+<ul>
+<li>🎵 <strong>Playlists públicas Spotify</strong> (Top Hits Diário Global/PT e Top 50 Global)</li>
+<li>🔐 <strong>Spotify Web API</strong> (Top Tracks pessoais + Perfil utilizador)</li>
+<li>📱 <strong>Player local</strong> (ficheiros MP3 via JSON)</li>
+<li>🎚️ <strong>Controles multimédia</strong> (play/pause/next/prev/volume)</li>
+<li>🎨 <strong>Visualizador Web Audio API</strong> (waveform/spectrum)</li>
+<li>⌨️ <strong>Atalhos teclado</strong> (Space=play, ←/→=navegação)</li>
+</ul>
+</section>
+<section id="estrutura-do-projeto" class="level2">
+<h2 class="anchored" data-anchor-id="estrutura-do-projeto">📁 <strong>Estrutura do Projeto</strong></h2>
+<pre><code>
+projeto/
+├── index.qmd                    \# Dashboard principal
+├── _quarto.yml                  \# Configurações projeto
+├── assets/
+│   ├── css/
+│   │   └── styles.css
+│   ├── images/                   \# Logo/Avatar/Thumbnails
+│   │   ├── Spotify_Full_Logo_RGB_Green.png
+│   │   |── DEFAULT_AVATAR.png
+|   |   └── ...
+│   ├── data/
+│   │   └── localTopTracks.json   \# Info Músicas locais
+│   ├── audio/
+│   │   └── ...                   \# Músicas locais
+│   ├── Fonts/
+│   │   └── ...                   \# Fontes Utilizadas
+│   └── js/
+│       ├── AudioProcessor.js     \# Web Audio API
+│       |── VisualizationEngine.js
+|       └── ...
+</code></pre>
+</section>
+<section id="funcionalidades" class="level2">
+<h2 class="anchored" data-anchor-id="funcionalidades">🎵 <strong>Funcionalidades</strong></h2>
+<section id="top-hits-público" class="level3">
+<h3 class="anchored" data-anchor-id="top-hits-público"><strong>1. TOP HITS (Público)</strong></h3>
+<p>Este separador é composto por três células simples, cada uma com uma célula que utiliza a <em>feature</em> de <em>embed</em> fornecida pelo spotify. Para isto foram escolhidas as seguintes playlists:</p>
+<pre><code>      ID da playlist        playlist
+── 37i9dQZF1DXcBWIGoYBM5M (Top Mundial)
+── 37i9dQZEVXbKyJS56d1pgi (Top Português)
+── 37i9dQZEVXbMDoHDwVN2tF (Viral 50)
+</code></pre>
+</section>
+<section id="your-top-spotify-api" class="level3">
+<h3 class="anchored" data-anchor-id="your-top-spotify-api"><strong>2. YOUR TOP (Spotify API)</strong></h3>
+<p>Esta aba é a que teve mais problemas com as alterações (relativamente recentes) que o Spotify implementou na sua API. Atualmente já não é possível aceder aos meta dados das músicas da plataforma, isto quer dizer a quantidade de direções que este projeto poderia ter foram reduzidas em grande parte aqui.</p>
+<p>Para além disto foi preciso lidar com o problema de não ser possível adquirir um token de acesso a longo prazo. Por esta razão, infelizmente, as células que utilizam os dados retirado da API ficam num estado de erro enquanto o utilizador não inserir um token válido no seu respetivo sítio.</p>
+<p>Inserindo um token válido esta é a informação a que foi possível ter acesso:</p>
+<pre><code>✅ Top 50 tracks (long_term)
+✅ Player interativo clicável
+✅ Perfil utilizador (v1/me + v1/users/{id})
+✅ Botão "Abrir Spotify"
+✅ Card perfil (avatar/followers)</code></pre>
+</section>
+<section id="top-10-local-2025" class="level3">
+<h3 class="anchored" data-anchor-id="top-10-local-2025"><strong>3. TOP 10 LOCAL 2025</strong></h3>
+<p>Na terceira e última página deste dashboard está o top 10 músicas mais ouvidas em 2025, segundo a <a href="https://open.spotify.com/playlist/37i9dQZF1DX18jTM2l2fJY?si=WYlzqydQSBag2bYtcpV__g">playlist do Spotify</a>.</p>
+<p>Devido ao facto do Spotify não permitir o acesso a dados como a frequência das músicas, foi necessário realizar o <em>download</em> manual do top 10, tanto como guardar as suas informações num ficheiro .json.</p>
+<p>O trabalho sobre estas músicas foi relativamente simples, tendo em conta que foi possível “reciclar” código anterior, como a classe AudioProcessing e VisualizationEngine. Estas classes dão uso da Web Audio API para processar dados áudio.</p>
+<p>Para este projeto foi decidido manter alguma simplicidade em relação às <em>features</em> disponíveis, mantendo o aspeto de um <em>player</em> básico, com o acréscimo de apenas um modo de visualização - <em>waveform</em>.</p>
+<p>As características deste <em>player</em> são:</p>
+<pre><code>✅ Player HTML5 nativo
+✅ Controles: ⏮️ ▶️/⏸️ ⏭️ 🎚️
+✅ Volume reativo
+✅ Loop playlist automática
+✅ Estado play/pause dinâmico
+</code></pre>
+</section>
+</section>
+<section id="como-utilizar" class="level2">
+<h2 class="anchored" data-anchor-id="como-utilizar"><strong>Como Utilizar</strong></h2>
+<section id="spotify-api-your-top" class="level3">
+<h3 class="anchored" data-anchor-id="spotify-api-your-top"><strong>1. Spotify API (Your Top)</strong></h3>
+<p>Para poder utilizar o separador <strong>Your Top</strong> é necessário um token de acesso, que pode ser encontrado seguindo os seguintes passos:</p>
+<pre><code>1. https://developer.spotify.com/
+2. Fazer login no Spotify
+3. Descer na página até encontrar uma caixa de código
+4. Na linha 2 do código copiar a string (sem ``) de carateres que segue const token = ...
+5. Colar este token no espaço dedicado da página Your Top</code></pre>
+</section>
+<section id="controles" class="level3">
+<h3 class="anchored" data-anchor-id="controles"><strong>2. Controles</strong></h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Ação</th>
+<th style="text-align: left;">Tecla</th>
+<th style="text-align: left;">Botão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Play/Pause</td>
+<td style="text-align: left;"><code>Espaço</code></td>
+<td style="text-align: left;">▶️/⏸️</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Anterior</td>
+<td style="text-align: left;"><code>←</code></td>
+<td style="text-align: left;">⏮️</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Próxima</td>
+<td style="text-align: left;"><code>→</code></td>
+<td style="text-align: left;">⏭️</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Volume</td>
+<td style="text-align: left;">Slider</td>
+<td style="text-align: left;">🎚️</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="músicas-locais" class="level3">
+<h3 class="anchored" data-anchor-id="músicas-locais"><strong>3. Músicas Locais</strong></h3>
+<p>Este é o formato do json que guarda a informação das músicas guardadas localmente</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Minha Música"</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"artist"</span><span class="fu">:</span> <span class="st">"Artista"</span><span class="fu">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"path"</span><span class="fu">:</span> <span class="st">"assets/audio/minha.mp3"</span><span class="fu">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"duration"</span><span class="fu">:</span> <span class="st">"3:45"</span><span class="fu">,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"img"</span><span class="fu">:</span> <span class="st">"assets/images/cover.jpg"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="visualizações" class="level3">
+<h3 class="anchored" data-anchor-id="visualizações"><strong>Visualizações</strong></h3>
+<p>Embora só tenha sido implementado um modo de visualização, estão presentes na pasta <strong>js</strong> outros três modos, também reutilizados de um dos trabalho anteriores da disciplina.</p>
+<p>Estas são as <em>keywords</em> que podem ser utilizadas no código do ficheiro quarto para mudar o tipo de visualização:</p>
+<pre><code>- "spectrum"     (barras frequência)
+- "waveform"     (forma onda)
+- "particles"    (partículas)
+- "circular"     (círculo radial)</code></pre>
+</section>
+</section>
+<section id="utilização-de-ia" class="level2">
+<h2 class="anchored" data-anchor-id="utilização-de-ia">Utilização de IA</h2>
+<p>Este projeto contou com o auxílio de modelos LLM, de forma a otimizar o desenvolvimento do projeto, tanto como a detetar erros e a auxiliar com a estilização do mesmo.</p>
+<p>A estilização do ficheiro styles.css foi principalmente desenvolvida com base no código fornecido por estes modelos.</p>
+<p>A integração de <strong>html</strong> no código <strong>ojs</strong> também contou com forte apoio em <em>inteligência artificial</em>.</p>
+<p>Apesar de tudo mantém-se o toque e olhar humano, que garante coerência e objetividade no todo do trabalho.</p>
+<p>Estes foram os modelos utilizados e as respetivas threads:</p>
+<ul>
+<li><a href="https://chatgpt.com/share/6965b355-a218-8008-b2a2-aa736cb2d5e6">ChatGPT</a></li>
+<li><a href="https://claude.ai/share/4696a283-95a0-4d28-9339-ba5c71e7dde1">Claude</a></li>
+<li><a href="https://gemini.google.com/share/9a5f79682395">Gemini</a></li>
+</ul>
+</section>
+<section id="dependências-técnicas" class="level2">
+<h2 class="anchored" data-anchor-id="dependências-técnicas">🔗 <strong>Dependências Técnicas</strong></h2>
+<pre><code>🌐 Spotify Web API v1
+🎵 Web Audio API (AnalyserNode)
+📊 Quarto Dashboard (columns)
+⚡ Observable JS (reactive)
+🎨 Canvas 2D API (visualizer)
+</code></pre>
+</section>
+<section id="conclusões" class="level2">
+<h2 class="anchored" data-anchor-id="conclusões">Conclusões</h2>
+<p>O desenvolvimento deste trabalho mostrou as vantagens da utilização de Quarto para criação de dashboards e/ou websites, sendo uma ferramenta que facilita muito a organização de projetos simples.</p>
+<p>Infelizmente o projeto ficou áquem do desejado, em parte por causa da alteração de política do Spotify em relação à sua API e em parte por causa do desenvolvimento sob pressão do projeto, tendo sido cada vez mais difícil conciliar os trabalhos, projetos e exames das disiplinas do terceiro semestre e estando sozinho neste projeto.</p>
+<p>Em relação a melhorias a este projeto seria positivo adicionar uma forma de ter um token fundional por <em>default</em> na aba Your Top, ou então ter uma forma de colocar conteúdo <em>place holder</em> enquanto não existisse um token válido. Na parte dos ficheiros locais também seria possível adicionar visualizações novas e possivelmente um modo de iterar entre elas.</p>
+<p>Em suma é um projeto que mostra muito bem as possibilidades de desenvolvimento com o quarto e principalmente trabalha a utilização de APIs. No entanto, demonstra também o tempo que é realmente necessário para se familiarizar com tantos protocolos e sintaxes diferentes.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

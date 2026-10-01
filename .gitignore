@@ -1,0 +1,16 @@
+# Firebase CLI (executável de 246 MB — excede o limite de 100 MB do GitHub)
+firebase-tools-instant-win.exe
+.firebase/
+firebase-debug.log*
+
+# Cache do Quarto
+.quarto/
+**/*.quarto_ipynb
+
+# Dependências
+node_modules/
+
+# Ficheiros de sistema
+Thumbs.db
+desktop.ini
+.DS_Store

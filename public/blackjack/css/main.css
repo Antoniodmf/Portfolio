@@ -1,0 +1,129 @@
+@font-face {
+  font-family: Casinova;
+  src: url("../fonts/Grand\ Casino.otf");
+}
+
+body {
+  font-family: Casinova;
+  font-size: xxx-large;
+  font-weight: 600;
+  color: gold;
+  background-image: url("../images/green-textile-texture.jpg");
+  background-size: cover;
+  object-fit: cover;
+}
+
+#game-title {
+  /* padding-left: 3vw;
+  padding-top: 3vh; */
+  text-align: center;
+  width: fit-content;
+}
+
+#play-buttons {
+  display: none;
+}
+
+#card {
+  width: 10vw;
+}
+.card {
+  background-color: transparent;
+  border: none;
+  width: 10vw;
+}
+.pile {
+  display: flex;
+  justify-content: center; /* centers the cards horizontally */
+  align-items: center; /* centers vertically */
+  gap: 1vw; /* space between cards */
+  flex-wrap: nowrap; /* all in one row */
+  background-color: transparent;
+}
+
+#house-pile {
+  align-items: center;
+  text-align: center;
+}
+
+#card-slot {
+  background-color: transparent;
+  border-style: dashed;
+  border-width: 4px;
+  border-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  width: fit-content;
+  background-image: url(../images/BalatroDeck/DeckBack.png);
+}
+
+#new-game-button {
+  margin-top: 15vh;
+  max-width: 20vw;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(165, 42, 42, 0.8);
+}
+
+#draw-card-button {
+  margin-top: 15vh;
+  max-width: 20vw;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(165, 42, 42, 0.8);
+}
+
+#stand-button {
+  max-width: 20vw;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(165, 42, 42, 0.8);
+}
+
+.card {
+  width: 10vw;
+  margin: 0.5vw;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* Hidden card style before flipping */
+.card.flipping {
+  animation: flipCard 0.6s forwards;
+}
+
+/* Flip animation keyframes */
+@keyframes flipCard {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(90deg);
+  }
+}
+
+.card {
+  width: 10vw;
+  margin: 0.5vw;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* When card appears */
+.card.show {
+  opacity: 1;
+  animation: showCard 0.6s forwards;
+}
+
+@keyframes showCard {
+  0% {
+    transform: rotateY(270deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}

@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>spotify-dashboard</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-762a22daf773aefdcdea655d637c39cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-dark-762a22daf773aefdcdea655d637c39cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-762a22daf773aefdcdea655d637c39cf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-dashboard/quarto-dashboard.js"></script>
+<script src="site_libs/quarto-dashboard/stickythead.js"></script>
+
+
+
+<script src="site_libs/quarto-dashboard/web-components.js" type="module"></script>
+<script src="site_libs/quarto-dashboard/components.js"></script>
+
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body class="quarto-dashboard nav-sidebar dashboard-fill fullcontent quarto-light">
+
+<header id="quarto-dashboard-header">
+<nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
+  <div class="navbar-container container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>    
+
+
+    <div class="navbar-brand-container">
+    <a href="#"><img src="assets/images/Spotify_Full_Logo_RGB_Green.png" alt="" class="navbar-logo light-content d-inline-block"></a>
+    <a href="#"><img src="assets/images/Spotify_Full_Logo_RGB_Green.png" alt="" class="navbar-logo dark-content d-inline-block"></a>
+      <div class="navbar-title">
+        
+        
+        
+      </div>
+    </div>
+<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-top-hits" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#top-hits" data-scrolling="false" href="#top-hits" aria-controls="top-hits" aria-selected="true"><span class="nav-link-text">Top Hits</span></a></li><li class="nav-item" role="presentation"><a id="tab-your-top" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#your-top" data-scrolling="false" href="#your-top" aria-controls="your-top" aria-selected="false"><span class="nav-link-text">Your Top</span></a></li><li class="nav-item" role="presentation"><a id="tab-top-10-of-2025" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#top-10-of-2025" data-scrolling="false" href="#top-10-of-2025" aria-controls="top-10-of-2025" aria-selected="false"><span class="nav-link-text">Top 10 of 2025</span></a></li></ul></div></div>
+</nav>
+</header>
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-layout-custom quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill quarto-dashboard-pages">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+<!-- main -->
+
+<div class="bslib-grid-item html-fill-item tab-content bslib-grid" data-layout="fill" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div id="top-hits" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-top-hits">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="no-scroll html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb1" data-startfrom="16" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 15;"><span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;iframe </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="vs">        data-testid="embed-iframe" </span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="vs">        style="border-radius:12px" </span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="vs">        src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator" </span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="vs">        width="100%" height="800"</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="vs">        frameBorder="0" </span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="vs">        allowfullscreen="" </span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="vs">        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" </span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="vs">        loading="lazy"&gt;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/iframe&gt;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div id="ojs-cell-1" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 50fr) minmax(3em, 50fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="no-scroll html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb2" data-startfrom="35" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 34;"><span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;iframe </span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="vs">    data-testid="embed-iframe" </span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="vs">    style="border-radius:12px" </span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="vs">    src="https://open.spotify.com/embed/playlist/37i9dQZEVXbKyJS56d1pgi?utm_source=generator" </span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="vs">    width="100%" height="390" </span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="vs">    frameBorder="0" </span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="vs">    allowfullscreen="" </span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="vs">    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" loading="lazy"&gt;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/iframe&gt;</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div id="ojs-cell-2" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="no-scroll html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb3" data-startfrom="53" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 52;"><span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;iframe </span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="vs">    data-testid="embed-iframe" </span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="vs">    style="border-radius:12px" </span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="vs">    src="https://open.spotify.com/embed/playlist/37i9dQZEVXbMDoHDwVN2tF?utm_source=generator" </span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="vs">    width="100%" height="390" </span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="vs">    frameBorder="0" </span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="vs">    allowfullscreen="" </span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="vs">    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" loading="lazy"&gt;</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/iframe&gt;</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div id="ojs-cell-3" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+</div>
+</div><div id="your-top" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-your-top">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 45fr) minmax(3em, 55fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 55fr) minmax(3em, 22.5fr) minmax(3em, 22.5fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="cell hidden html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb4" data-startfrom="75" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 74;"><span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>beforeToken <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html</span><span class="vs">`&lt;div style="color:#b3b3b3; padding: 1rem;"&gt;</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="vs">    Introduz o teu Spotify access token para carregar os dados.</span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;`</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div id="ojs-cell-4" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell hidden html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb5" data-startfrom="88" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 87;"><span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>fetchWebApi <span class="op">=</span> <span class="kw">async</span> (endpoint<span class="op">,</span> method<span class="op">,</span> body) <span class="kw">=&gt;</span> {</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="op">!</span>token) </span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Se não existir um token, não chama a API</span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> res <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="vs">`https://api.spotify.com/</span><span class="sc">${</span>endpoint<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> {</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>        <span class="dt">headers</span><span class="op">:</span> {</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Authorization</span><span class="op">:</span> <span class="vs">`Bearer </span><span class="sc">${</span>token<span class="sc">}</span><span class="vs">`</span><span class="op">,</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>        method<span class="op">,</span></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>        <span class="dt">body</span><span class="op">:</span> body <span class="op">?</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(body) <span class="op">:</span> <span class="kw">undefined</span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Se o token estiver inválido devolve null</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="op">!</span>res<span class="op">.</span><span class="at">ok</span>) <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="cf">await</span> res<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>getUserProfile <span class="op">=</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="op">!</span>token) <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="cf">await</span> <span class="fu">fetchWebApi</span>(<span class="vs">`v1/me`</span><span class="op">,</span> <span class="st">"GET"</span>)<span class="op">;</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>getDisplayUserProfile <span class="op">=</span> <span class="kw">async</span> (id) <span class="kw">=&gt;</span> {</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="op">!</span>token <span class="op">||</span> id <span class="op">===</span> <span class="kw">null</span>) <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="cf">await</span> <span class="fu">fetchWebApi</span>(<span class="vs">`v1/users/</span><span class="sc">${</span>id<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> <span class="st">"GET"</span>)<span class="op">;</span></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>auxProfile <span class="op">=</span> <span class="cf">await</span> <span class="fu">getUserProfile</span>()<span class="op">;</span></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a>userProfile <span class="op">=</span> <span class="cf">await</span> <span class="fu">getDisplayUserProfile</span>(auxProfile<span class="op">.</span><span class="at">id</span>)</span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>getTopTracks <span class="op">=</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="op">!</span>token) <span class="cf">return</span> []<span class="op">;</span></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (<span class="cf">await</span> <span class="fu">fetchWebApi</span>(</span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v1/me/top/tracks?time_range=long_term&amp;limit=50'</span><span class="op">,</span> <span class="st">'GET'</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">.</span><span class="at">items</span><span class="op">;</span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>topTracks <span class="op">=</span> <span class="cf">await</span> <span class="fu">getTopTracks</span>()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-5-1" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-5-2" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-5-3" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-5-4" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-5-5" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-5-6" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-5-7" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+<div class="track-card no-scroll html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb6" data-startfrom="144" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 143;"><span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>mutable selectedTrack <span class="op">=</span> topTracks[<span class="dv">0</span>]</span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>selectedTrackURL <span class="op">=</span> selectedTrack<span class="op">.</span><span class="at">external_urls</span><span class="op">.</span><span class="at">spotify</span> <span class="op">+</span> <span class="st">"?utm_source=generator"</span></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;iframe </span></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a><span class="vs">      data-testid="embed-iframe"</span></span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a><span class="vs">      id="spotify-embed"</span></span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a><span class="vs">      style="border-radius:12px" </span></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a><span class="vs">      src= "https://open.spotify.com/embed/track/</span><span class="sc">${</span>selectedTrack<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">?utm_source=generator"</span></span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a><span class="vs">      width="100%" height="352" </span></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a><span class="vs">      frameBorder="0"</span></span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a><span class="vs">      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture;" </span></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="vs">      loading="lazy"&gt;</span></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/iframe&gt;</span></span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a><span class="vs">  `</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-6-1" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-6-2" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-6-3" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="no-scroll html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb7" data-startfrom="166" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 165;"><span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="user-profile-card"&gt;</span></span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="user-profile-main"&gt;</span></span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;img class="user-avatar"</span></span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a><span class="vs">        src="</span><span class="sc">${</span>(userProfile<span class="op">.</span><span class="at">images</span> <span class="op">&amp;&amp;</span> userProfile<span class="op">.</span><span class="at">images</span><span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>              <span class="op">?</span> userProfile<span class="op">.</span><span class="at">images</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">url</span></span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>              <span class="op">:</span> <span class="st">'assets/images/DEFAULT_AVATAR.png'</span><span class="sc">}</span><span class="vs">"&gt;</span></span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div class="user-profile-text"&gt;</span></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;div class="user-display-name"&gt;</span><span class="sc">${</span>userProfile<span class="op">.</span><span class="at">display_name</span><span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;div class="user-id"&gt;@</span><span class="sc">${</span>userProfile<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;</span></span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/div&gt;</span></span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="user-followers"&gt;</span></span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a><span class="vs">      </span><span class="sc">${</span>(userProfile<span class="op">.</span><span class="at">followers</span> <span class="op">&amp;&amp;</span> userProfile<span class="op">.</span><span class="at">followers</span><span class="op">.</span><span class="at">total</span>)</span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a>        <span class="op">?</span> userProfile<span class="op">.</span><span class="at">followers</span><span class="op">.</span><span class="at">total</span></span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span> <span class="dv">0</span><span class="sc">}</span><span class="vs"> followers</span></span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/div&gt;</span></span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;a class="user-profile-button"</span></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a><span class="vs">       href="</span><span class="sc">${</span>(userProfile) <span class="op">?</span> userProfile<span class="op">.</span><span class="at">external_urls</span><span class="op">.</span><span class="at">spotify</span> <span class="op">:</span> <span class="st">"https://open.spotify.com/playlist/5ABHKGoOzxkaa28ttQV9sE"</span><span class="sc">}</span><span class="vs">"</span></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="vs">       target="_blank"</span></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="vs">       rel="noopener noreferrer"&gt;</span></span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a><span class="vs">      Abrir perfil no Spotify</span></span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/a&gt;</span></span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div id="ojs-cell-7" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="no-scroll html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb8" data-startfrom="202" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 201;"><span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a>viewof userToken <span class="op">=</span> {</span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> form <span class="op">=</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="token-input"&gt;</span></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;label class="token-label"&gt;</span></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="vs">        Spotify access token</span></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/label&gt;</span></span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;input</span></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="vs">        class="user-token-input"</span></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a><span class="vs">        type="text"</span></span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="vs">        placeholder="Cola aqui o teu token..."</span></span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a><span class="vs">      &gt;</span></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a><span class="vs">      </span></span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div style="margin-top: 4px; font-size: 0.75rem; color: #b3b3b3;"&gt;</span></span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="vs">        Ainda não tens token?</span></span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;a href="https://developer.spotify.com"</span></span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a><span class="vs">           target="_blank"</span></span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="vs">           rel="noopener noreferrer"</span></span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="vs">           style="color: #1db954; text-decoration: underline;"&gt;</span></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="vs">          Clica aqui</span></span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;/a&gt;</span></span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a><span class="vs">         para ver como obter um.</span></span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;</span></span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/div&gt;</span></span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="vs">  `</span><span class="op">;</span></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> input <span class="op">=</span> form<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"input"</span>)<span class="op">;</span></span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a>  form<span class="op">.</span><span class="at">value</span> <span class="op">=</span> input<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a>  input<span class="op">.</span><span class="at">oninput</span> <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a>    form<span class="op">.</span><span class="at">value</span> <span class="op">=</span> input<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> form<span class="op">;</span></span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="co">// variável “normal” com o valor atual do token</span></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>token <span class="op">=</span> userToken</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-8-1" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-8-2" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div><div class="no-scroll html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb9" data-startfrom="246" data-source-offset="-36"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 245;"><span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a>formatDuration <span class="op">=</span> (ms) <span class="kw">=&gt;</span> {</span>
+<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> minutes <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(ms <span class="op">/</span> <span class="dv">60000</span>)<span class="op">;</span></span>
+<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> seconds <span class="op">=</span> ((ms <span class="op">%</span> <span class="dv">60000</span>) <span class="op">/</span> <span class="dv">1000</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span>minutes<span class="sc">}</span><span class="vs">:</span><span class="sc">${</span>seconds <span class="op">&lt;</span> <span class="dv">10</span> <span class="op">?</span> <span class="st">'0'</span> <span class="op">:</span> <span class="st">''</span><span class="sc">}${</span>seconds<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a><span class="co">// Renderização da lista</span></span>
+<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Criamos o container principal</span></span>
+<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> container <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="track-list-container"&gt;</span><span class="sc">${</span>topTracks<span class="op">.</span><span class="fu">map</span>(track <span class="kw">=&gt;</span> {</span>
+<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> row <span class="op">=</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb9-257"><a href="#cb9-257" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;div class="track-item </span><span class="sc">${</span>track<span class="op">.</span><span class="at">id</span> <span class="op">===</span> selectedTrack<span class="op">.</span><span class="at">id</span> <span class="op">?</span> <span class="st">'active'</span> <span class="op">:</span> <span class="st">''</span><span class="sc">}</span><span class="vs">"&gt;</span></span>
+<span id="cb9-258"><a href="#cb9-258" aria-hidden="true" tabindex="-1"></a><span class="vs">                &lt;img class="track-img" src="</span><span class="sc">${</span>track<span class="op">.</span><span class="at">album</span><span class="op">.</span><span class="at">images</span>[<span class="dv">2</span>]<span class="op">?.</span><span class="at">url</span><span class="sc">}</span><span class="vs">"&gt;</span></span>
+<span id="cb9-259"><a href="#cb9-259" aria-hidden="true" tabindex="-1"></a><span class="vs">                &lt;div class="track-info"&gt;</span></span>
+<span id="cb9-260"><a href="#cb9-260" aria-hidden="true" tabindex="-1"></a><span class="vs">                    &lt;div class="track-name"&gt;</span><span class="sc">${</span>track<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb9-261"><a href="#cb9-261" aria-hidden="true" tabindex="-1"></a><span class="vs">                    &lt;div class="track-artist"&gt;</span><span class="sc">${</span>track<span class="op">.</span><span class="at">artists</span><span class="op">.</span><span class="fu">map</span>(a <span class="kw">=&gt;</span> a<span class="op">.</span><span class="at">name</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">', '</span>)<span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb9-262"><a href="#cb9-262" aria-hidden="true" tabindex="-1"></a><span class="vs">                &lt;/div&gt;</span></span>
+<span id="cb9-263"><a href="#cb9-263" aria-hidden="true" tabindex="-1"></a><span class="vs">                &lt;div class="track-duration"&gt;</span><span class="sc">${</span><span class="fu">formatDuration</span>(track<span class="op">.</span><span class="at">duration_ms</span>)<span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb9-264"><a href="#cb9-264" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb9-265"><a href="#cb9-265" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-266"><a href="#cb9-266" aria-hidden="true" tabindex="-1"></a>        row<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb9-267"><a href="#cb9-267" aria-hidden="true" tabindex="-1"></a>            mutable selectedTrack <span class="op">=</span> track<span class="op">;</span></span>
+<span id="cb9-268"><a href="#cb9-268" aria-hidden="true" tabindex="-1"></a>        }<span class="op">;</span></span>
+<span id="cb9-269"><a href="#cb9-269" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-270"><a href="#cb9-270" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> row<span class="op">;</span></span>
+<span id="cb9-271"><a href="#cb9-271" aria-hidden="true" tabindex="-1"></a>        })<span class="sc">}</span></span>
+<span id="cb9-272"><a href="#cb9-272" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb9-273"><a href="#cb9-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-274"><a href="#cb9-274" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> container<span class="op">;</span></span>
+<span id="cb9-275"><a href="#cb9-275" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-9-1" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-9-2" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+</div><div id="top-10-of-2025" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-top-10-of-2025">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 25fr) minmax(3em, 75fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="cell hidden html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb10" data-startfrom="287" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 286;"><span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a>localAudioFiles <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(<span class="st">"assets/data/localTopTracks.json"</span>)</span>
+<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">then</span>(response <span class="kw">=&gt;</span> response<span class="op">.</span><span class="fu">json</span>())</span>
+<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">catch</span>(() <span class="kw">=&gt;</span> [])</span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a>mutable selectedLocalTrack <span class="op">=</span> <span class="kw">null</span></span>
+<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a>mutable audioSource <span class="op">=</span> <span class="kw">null</span></span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a>mutable isPlaying <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a>mutable currentTrackIndex <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a>mutable currentVolume <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb10-298"><a href="#cb10-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">updatePlayingState</span>() {</span>
+<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span>) {</span>
+<span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a>    mutable isPlaying <span class="op">=</span> <span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span><span class="op">.</span><span class="fu">getIsPlaying</span>()<span class="op">;</span></span>
+<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-10-1" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-10-2" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-10-3" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-10-4" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-10-5" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-10-6" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-10-7" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div><div class="cell hidden html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb11" data-startfrom="311" data-source-offset="-15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 310;"><span id="cb11-311"><a href="#cb11-311" aria-hidden="true" tabindex="-1"></a>playPause <span class="op">=</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb11-312"><a href="#cb11-312" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span>) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb11-313"><a href="#cb11-313" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> <span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span><span class="op">.</span><span class="fu">resumeAudio</span>()<span class="op">;</span></span>
+<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">updatePlayingState</span>()<span class="op">;</span></span>
+<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-317"><a href="#cb11-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a><span class="co">// Track anterior</span></span>
+<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a>previousTrack <span class="op">=</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (localAudioFiles<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span>) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> newIndex <span class="op">=</span> currentTrackIndex <span class="op">&gt;</span> <span class="dv">0</span> </span>
+<span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> currentTrackIndex <span class="op">-</span> <span class="dv">1</span> </span>
+<span id="cb11-324"><a href="#cb11-324" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> localAudioFiles<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-325"><a href="#cb11-325" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-326"><a href="#cb11-326" aria-hidden="true" tabindex="-1"></a>  mutable currentTrackIndex <span class="op">=</span> newIndex<span class="op">;</span></span>
+<span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a>  mutable selectedLocalTrack <span class="op">=</span> localAudioFiles[newIndex]<span class="op">;</span></span>
+<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a>  mutable audioSource <span class="op">=</span> localAudioFiles[newIndex]<span class="op">;</span></span>
+<span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a><span class="co">// Próxima track</span></span>
+<span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a>nextTrack <span class="op">=</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (localAudioFiles<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span>) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> newIndex <span class="op">=</span> (currentTrackIndex <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> localAudioFiles<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a>  mutable currentTrackIndex <span class="op">=</span> newIndex<span class="op">;</span></span>
+<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a>  mutable selectedLocalTrack <span class="op">=</span> localAudioFiles[newIndex]<span class="op">;</span></span>
+<span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a>  mutable audioSource <span class="op">=</span> localAudioFiles[newIndex]<span class="op">;</span></span>
+<span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-11-1" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-11-2" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-11-3" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div><div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb12" data-startfrom="345" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 344;"><span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> container <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="track-list-container local-tracks"&gt;</span><span class="sc">${</span>localAudioFiles<span class="op">.</span><span class="fu">map</span>((track<span class="op">,</span> index) <span class="kw">=&gt;</span> {</span>
+<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> row <span class="op">=</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div class="track-item </span><span class="sc">${</span>track <span class="op">===</span> selectedLocalTrack <span class="op">?</span> <span class="st">'active'</span> <span class="op">:</span> <span class="st">''</span><span class="sc">}</span><span class="vs">"&gt;</span></span>
+<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;img class="track-img" src="</span><span class="sc">${</span>track<span class="op">.</span><span class="at">img</span><span class="sc">}</span><span class="vs">"&gt;</span></span>
+<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;div class="track-info"&gt;</span></span>
+<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;div class="track-name"&gt;</span><span class="sc">${</span>track<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;div class="track-artist"&gt;</span><span class="sc">${</span>track<span class="op">.</span><span class="at">artist</span><span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;/div&gt;</span></span>
+<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;div class="track-duration"&gt;</span><span class="sc">${</span>track<span class="op">.</span><span class="at">duration</span><span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a>    row<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a>      mutable currentTrackIndex <span class="op">=</span> index<span class="op">;</span></span>
+<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a>      mutable selectedLocalTrack <span class="op">=</span> track<span class="op">;</span></span>
+<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a>      mutable audioSource <span class="op">=</span> track<span class="op">;</span></span>
+<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> row<span class="op">;</span></span>
+<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a>  })<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> container<span class="op">;</span></span>
+<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div id="ojs-cell-12" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="no-scroll html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb13" data-startfrom="376" data-source-offset="-41"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 375;"><span id="cb13-376"><a href="#cb13-376" aria-hidden="true" tabindex="-1"></a>viewof control <span class="op">=</span> {</span>
+<span id="cb13-377"><a href="#cb13-377" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> controls <span class="op">=</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb13-378"><a href="#cb13-378" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="audio-controls"&gt;</span></span>
+<span id="cb13-379"><a href="#cb13-379" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;button class="control-btn" title="Anterior"&gt;</span></span>
+<span id="cb13-380"><a href="#cb13-380" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"&gt;</span></span>
+<span id="cb13-381"><a href="#cb13-381" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/&gt;</span></span>
+<span id="cb13-382"><a href="#cb13-382" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;/svg&gt;</span></span>
+<span id="cb13-383"><a href="#cb13-383" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/button&gt;</span></span>
+<span id="cb13-384"><a href="#cb13-384" aria-hidden="true" tabindex="-1"></a><span class="vs">      </span></span>
+<span id="cb13-385"><a href="#cb13-385" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;button class="control-btn control-btn-main" title="</span><span class="sc">${</span>isPlaying <span class="op">?</span> <span class="st">'Pausar'</span> <span class="op">:</span> <span class="st">'Reproduzir'</span><span class="sc">}</span><span class="vs">"&gt;</span></span>
+<span id="cb13-386"><a href="#cb13-386" aria-hidden="true" tabindex="-1"></a><span class="vs">        </span><span class="sc">${</span>isPlaying </span>
+<span id="cb13-387"><a href="#cb13-387" aria-hidden="true" tabindex="-1"></a>          <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"&gt;</span></span>
+<span id="cb13-388"><a href="#cb13-388" aria-hidden="true" tabindex="-1"></a><span class="vs">              &lt;path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/&gt;</span></span>
+<span id="cb13-389"><a href="#cb13-389" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;/svg&gt;`</span></span>
+<span id="cb13-390"><a href="#cb13-390" aria-hidden="true" tabindex="-1"></a>          <span class="op">:</span> <span class="fu">html</span><span class="vs">`&lt;svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"&gt;</span></span>
+<span id="cb13-391"><a href="#cb13-391" aria-hidden="true" tabindex="-1"></a><span class="vs">              &lt;path d="M8 5v14l11-7z"/&gt;</span></span>
+<span id="cb13-392"><a href="#cb13-392" aria-hidden="true" tabindex="-1"></a><span class="vs">            &lt;/svg&gt;`</span></span>
+<span id="cb13-393"><a href="#cb13-393" aria-hidden="true" tabindex="-1"></a>        <span class="sc">}</span></span>
+<span id="cb13-394"><a href="#cb13-394" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/button&gt;</span></span>
+<span id="cb13-395"><a href="#cb13-395" aria-hidden="true" tabindex="-1"></a><span class="vs">      </span></span>
+<span id="cb13-396"><a href="#cb13-396" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;button class="control-btn" title="Próxima"&gt;</span></span>
+<span id="cb13-397"><a href="#cb13-397" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"&gt;</span></span>
+<span id="cb13-398"><a href="#cb13-398" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/&gt;</span></span>
+<span id="cb13-399"><a href="#cb13-399" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;/svg&gt;</span></span>
+<span id="cb13-400"><a href="#cb13-400" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/button&gt;</span></span>
+<span id="cb13-401"><a href="#cb13-401" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/div&gt;</span></span>
+<span id="cb13-402"><a href="#cb13-402" aria-hidden="true" tabindex="-1"></a><span class="vs">  `</span><span class="op">;</span></span>
+<span id="cb13-403"><a href="#cb13-403" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-404"><a href="#cb13-404" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> buttons <span class="op">=</span> controls<span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">'.control-btn'</span>)<span class="op">;</span></span>
+<span id="cb13-405"><a href="#cb13-405" aria-hidden="true" tabindex="-1"></a>  buttons[<span class="dv">0</span>]<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> previousTrack<span class="op">;</span></span>
+<span id="cb13-406"><a href="#cb13-406" aria-hidden="true" tabindex="-1"></a>  buttons[<span class="dv">1</span>]<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> playPause<span class="op">;</span></span>
+<span id="cb13-407"><a href="#cb13-407" aria-hidden="true" tabindex="-1"></a>  buttons[<span class="dv">2</span>]<span class="op">.</span><span class="at">onclick</span> <span class="op">=</span> nextTrack<span class="op">;</span></span>
+<span id="cb13-408"><a href="#cb13-408" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-409"><a href="#cb13-409" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> controls<span class="op">;</span></span>
+<span id="cb13-410"><a href="#cb13-410" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-411"><a href="#cb13-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-412"><a href="#cb13-412" aria-hidden="true" tabindex="-1"></a>viewof volumeSlider <span class="op">=</span> {</span>
+<span id="cb13-413"><a href="#cb13-413" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> form <span class="op">=</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb13-414"><a href="#cb13-414" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="volume-control"&gt;</span></span>
+<span id="cb13-415"><a href="#cb13-415" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;label class="volume-label"&gt;</span></span>
+<span id="cb13-416"><a href="#cb13-416" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"&gt;</span></span>
+<span id="cb13-417"><a href="#cb13-417" aria-hidden="true" tabindex="-1"></a><span class="vs">          &lt;path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/&gt;</span></span>
+<span id="cb13-418"><a href="#cb13-418" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;/svg&gt;</span></span>
+<span id="cb13-419"><a href="#cb13-419" aria-hidden="true" tabindex="-1"></a><span class="vs">        Volume</span></span>
+<span id="cb13-420"><a href="#cb13-420" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/label&gt;</span></span>
+<span id="cb13-421"><a href="#cb13-421" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div class="volume-slider-container"&gt;</span></span>
+<span id="cb13-422"><a href="#cb13-422" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;input </span></span>
+<span id="cb13-423"><a href="#cb13-423" aria-hidden="true" tabindex="-1"></a><span class="vs">          type="range" </span></span>
+<span id="cb13-424"><a href="#cb13-424" aria-hidden="true" tabindex="-1"></a><span class="vs">          min="0" </span></span>
+<span id="cb13-425"><a href="#cb13-425" aria-hidden="true" tabindex="-1"></a><span class="vs">          max="100" </span></span>
+<span id="cb13-426"><a href="#cb13-426" aria-hidden="true" tabindex="-1"></a><span class="vs">          step="1" </span></span>
+<span id="cb13-427"><a href="#cb13-427" aria-hidden="true" tabindex="-1"></a><span class="vs">          value="50"</span></span>
+<span id="cb13-428"><a href="#cb13-428" aria-hidden="true" tabindex="-1"></a><span class="vs">          class="volume-slider"&gt;</span></span>
+<span id="cb13-429"><a href="#cb13-429" aria-hidden="true" tabindex="-1"></a><span class="vs">        &lt;span class="volume-value"&gt;50%&lt;/span&gt;</span></span>
+<span id="cb13-430"><a href="#cb13-430" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;</span></span>
+<span id="cb13-431"><a href="#cb13-431" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/div&gt;</span></span>
+<span id="cb13-432"><a href="#cb13-432" aria-hidden="true" tabindex="-1"></a><span class="vs">  `</span><span class="op">;</span></span>
+<span id="cb13-433"><a href="#cb13-433" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-434"><a href="#cb13-434" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> input <span class="op">=</span> form<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">'input'</span>)<span class="op">;</span></span>
+<span id="cb13-435"><a href="#cb13-435" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> valueDisplay <span class="op">=</span> form<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">'.volume-value'</span>)<span class="op">;</span></span>
+<span id="cb13-436"><a href="#cb13-436" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-437"><a href="#cb13-437" aria-hidden="true" tabindex="-1"></a>  form<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="op">+</span>input<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
+<span id="cb13-438"><a href="#cb13-438" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-439"><a href="#cb13-439" aria-hidden="true" tabindex="-1"></a>  input<span class="op">.</span><span class="at">oninput</span> <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb13-440"><a href="#cb13-440" aria-hidden="true" tabindex="-1"></a>    form<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="op">+</span>input<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
+<span id="cb13-441"><a href="#cb13-441" aria-hidden="true" tabindex="-1"></a>    valueDisplay<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="vs">`</span><span class="sc">${</span>input<span class="op">.</span><span class="at">value</span><span class="sc">}</span><span class="vs">%`</span><span class="op">;</span></span>
+<span id="cb13-442"><a href="#cb13-442" aria-hidden="true" tabindex="-1"></a>    form<span class="op">.</span><span class="fu">dispatchEvent</span>(<span class="kw">new</span> <span class="bu">Event</span>(<span class="st">'input'</span>))<span class="op">;</span></span>
+<span id="cb13-443"><a href="#cb13-443" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb13-444"><a href="#cb13-444" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-445"><a href="#cb13-445" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> form<span class="op">;</span></span>
+<span id="cb13-446"><a href="#cb13-446" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-447"><a href="#cb13-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-448"><a href="#cb13-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-449"><a href="#cb13-449" aria-hidden="true" tabindex="-1"></a>viewof audioFile <span class="op">=</span> {</span>
+<span id="cb13-450"><a href="#cb13-450" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> form <span class="op">=</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb13-451"><a href="#cb13-451" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="audio-upload"&gt;</span></span>
+<span id="cb13-452"><a href="#cb13-452" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;label style="font-weight: 200; display: block;"&gt;</span></span>
+<span id="cb13-453"><a href="#cb13-453" aria-hidden="true" tabindex="-1"></a><span class="vs">        Escolha um ficheiro de áudio</span></span>
+<span id="cb13-454"><a href="#cb13-454" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/label&gt;</span></span>
+<span id="cb13-455"><a href="#cb13-455" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;input </span></span>
+<span id="cb13-456"><a href="#cb13-456" aria-hidden="true" tabindex="-1"></a><span class="vs">        type="file" </span></span>
+<span id="cb13-457"><a href="#cb13-457" aria-hidden="true" tabindex="-1"></a><span class="vs">        accept="audio/*"</span></span>
+<span id="cb13-458"><a href="#cb13-458" aria-hidden="true" tabindex="-1"></a><span class="vs">        style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #444;"&gt;</span></span>
+<span id="cb13-459"><a href="#cb13-459" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb13-460"><a href="#cb13-460" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-461"><a href="#cb13-461" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> input <span class="op">=</span> form<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"input"</span>)<span class="op">;</span></span>
+<span id="cb13-462"><a href="#cb13-462" aria-hidden="true" tabindex="-1"></a>  form<span class="op">.</span><span class="at">value</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb13-463"><a href="#cb13-463" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-464"><a href="#cb13-464" aria-hidden="true" tabindex="-1"></a>  input<span class="op">.</span><span class="at">onchange</span> <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb13-465"><a href="#cb13-465" aria-hidden="true" tabindex="-1"></a>    form<span class="op">.</span><span class="at">value</span> <span class="op">=</span> input<span class="op">.</span><span class="at">files</span><span class="op">;</span></span>
+<span id="cb13-466"><a href="#cb13-466" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb13-467"><a href="#cb13-467" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-468"><a href="#cb13-468" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> form<span class="op">;</span></span>
+<span id="cb13-469"><a href="#cb13-469" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-13-1" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-13-2" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-13-3" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="cell hidden html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb14" data-startfrom="473" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 472;"><span id="cb14-473"><a href="#cb14-473" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb14-474"><a href="#cb14-474" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> handleKeyPress <span class="op">=</span> (e) <span class="kw">=&gt;</span> {</span>
+<span id="cb14-475"><a href="#cb14-475" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (e<span class="op">.</span><span class="at">target</span><span class="op">.</span><span class="at">tagName</span> <span class="op">===</span> <span class="st">'INPUT'</span> <span class="op">||</span> e<span class="op">.</span><span class="at">target</span><span class="op">.</span><span class="at">tagName</span> <span class="op">===</span> <span class="st">'TEXTAREA'</span>) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb14-476"><a href="#cb14-476" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-477"><a href="#cb14-477" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (e<span class="op">.</span><span class="at">code</span> <span class="op">===</span> <span class="st">'Space'</span>) {</span>
+<span id="cb14-478"><a href="#cb14-478" aria-hidden="true" tabindex="-1"></a>      e<span class="op">.</span><span class="fu">preventDefault</span>()<span class="op">;</span></span>
+<span id="cb14-479"><a href="#cb14-479" aria-hidden="true" tabindex="-1"></a>      <span class="fu">playPause</span>()<span class="op">;</span></span>
+<span id="cb14-480"><a href="#cb14-480" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (e<span class="op">.</span><span class="at">code</span> <span class="op">===</span> <span class="st">'ArrowLeft'</span>) {</span>
+<span id="cb14-481"><a href="#cb14-481" aria-hidden="true" tabindex="-1"></a>      e<span class="op">.</span><span class="fu">preventDefault</span>()<span class="op">;</span></span>
+<span id="cb14-482"><a href="#cb14-482" aria-hidden="true" tabindex="-1"></a>      <span class="fu">previousTrack</span>()<span class="op">;</span></span>
+<span id="cb14-483"><a href="#cb14-483" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (e<span class="op">.</span><span class="at">code</span> <span class="op">===</span> <span class="st">'ArrowRight'</span>) {</span>
+<span id="cb14-484"><a href="#cb14-484" aria-hidden="true" tabindex="-1"></a>      e<span class="op">.</span><span class="fu">preventDefault</span>()<span class="op">;</span></span>
+<span id="cb14-485"><a href="#cb14-485" aria-hidden="true" tabindex="-1"></a>      <span class="fu">nextTrack</span>()<span class="op">;</span></span>
+<span id="cb14-486"><a href="#cb14-486" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-487"><a href="#cb14-487" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb14-488"><a href="#cb14-488" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-489"><a href="#cb14-489" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">'keydown'</span><span class="op">,</span> handleKeyPress)<span class="op">;</span></span>
+<span id="cb14-490"><a href="#cb14-490" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="st">"Atalhos de teclado ativados"</span><span class="op">;</span></span>
+<span id="cb14-491"><a href="#cb14-491" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div id="ojs-cell-14" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb15" data-startfrom="499" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 498;"><span id="cb15-499"><a href="#cb15-499" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;canvas id="canva"&gt;&lt;/canvas&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display html-fill-item html-fill-container">
+<div id="ojs-cell-15" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="cell hidden html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb16" data-startfrom="508" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 507;"><span id="cb16-508"><a href="#cb16-508" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-509"><a href="#cb16-509" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> { AudioProcessor } <span class="op">=</span> <span class="cf">await</span> <span class="im">import</span>(<span class="st">'/assets/js/AudioProcessor.js'</span>)<span class="op">;</span></span>
+<span id="cb16-510"><a href="#cb16-510" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> { VisualizationEngine } <span class="op">=</span> <span class="cf">await</span> <span class="im">import</span>(<span class="st">'/assets/js/VisualizationEngine.js'</span>)</span>
+<span id="cb16-511"><a href="#cb16-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-512"><a href="#cb16-512" aria-hidden="true" tabindex="-1"></a>  <span class="bu">window</span><span class="op">.</span><span class="at">AudioProcessor</span> <span class="op">=</span> AudioProcessor<span class="op">;</span></span>
+<span id="cb16-513"><a href="#cb16-513" aria-hidden="true" tabindex="-1"></a>  <span class="bu">window</span><span class="op">.</span><span class="at">VisualizationEngine</span> <span class="op">=</span> VisualizationEngine<span class="op">;</span></span>
+<span id="cb16-514"><a href="#cb16-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-515"><a href="#cb16-515" aria-hidden="true" tabindex="-1"></a>  <span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb16-516"><a href="#cb16-516" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-16-1" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb17" data-startfrom="517" data-source-offset="-301"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 516;"><span id="cb17-517"><a href="#cb17-517" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb17-518"><a href="#cb17-518" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (audioFile<span class="op">?.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb17-519"><a href="#cb17-519" aria-hidden="true" tabindex="-1"></a>    mutable audioSource <span class="op">=</span> audioFile[<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb17-520"><a href="#cb17-520" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb17-521"><a href="#cb17-521" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span></span>
+<span id="cb17-522"><a href="#cb17-522" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-16-2" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb18" data-startfrom="523" data-source-offset="-389"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 522;"><span id="cb18-523"><a href="#cb18-523" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-524"><a href="#cb18-524" aria-hidden="true" tabindex="-1"></a>  mutable currentVolume <span class="op">=</span> volumeSlider<span class="op">;</span></span>
+<span id="cb18-525"><a href="#cb18-525" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-526"><a href="#cb18-526" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span>) {</span>
+<span id="cb18-527"><a href="#cb18-527" aria-hidden="true" tabindex="-1"></a>    <span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span><span class="op">.</span><span class="fu">calculateAudioLevel</span>(volumeSlider)<span class="op">;</span></span>
+<span id="cb18-528"><a href="#cb18-528" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">"Volume definido para:"</span><span class="op">,</span> volumeSlider <span class="op">+</span> <span class="st">"%"</span>)<span class="op">;</span></span>
+<span id="cb18-529"><a href="#cb18-529" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-530"><a href="#cb18-530" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container">
+<div id="ojs-cell-16-3" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell hidden html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb19" data-startfrom="534" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 533;"><span id="cb19-534"><a href="#cb19-534" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">loadSourceAsFile</span>(source) {</span>
+<span id="cb19-535"><a href="#cb19-535" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-536"><a href="#cb19-536" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (source <span class="kw">instanceof</span> <span class="bu">File</span>) {</span>
+<span id="cb19-537"><a href="#cb19-537" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> source<span class="op">;</span></span>
+<span id="cb19-538"><a href="#cb19-538" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-539"><a href="#cb19-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-540"><a href="#cb19-540" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (source<span class="op">?.</span><span class="at">path</span>) {</span>
+<span id="cb19-541"><a href="#cb19-541" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(source<span class="op">.</span><span class="at">path</span>)<span class="op">;</span></span>
+<span id="cb19-542"><a href="#cb19-542" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> blob <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">blob</span>()<span class="op">;</span></span>
+<span id="cb19-543"><a href="#cb19-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-544"><a href="#cb19-544" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">new</span> <span class="bu">File</span>(</span>
+<span id="cb19-545"><a href="#cb19-545" aria-hidden="true" tabindex="-1"></a>      [blob]<span class="op">,</span></span>
+<span id="cb19-546"><a href="#cb19-546" aria-hidden="true" tabindex="-1"></a>      source<span class="op">.</span><span class="at">name</span> <span class="op">??</span> <span class="st">"audio.mp3"</span><span class="op">,</span></span>
+<span id="cb19-547"><a href="#cb19-547" aria-hidden="true" tabindex="-1"></a>      { <span class="dt">type</span><span class="op">:</span> blob<span class="op">.</span><span class="at">type</span> <span class="op">||</span> <span class="st">"audio/mpeg"</span> }</span>
+<span id="cb19-548"><a href="#cb19-548" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span>
+<span id="cb19-549"><a href="#cb19-549" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-550"><a href="#cb19-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-551"><a href="#cb19-551" aria-hidden="true" tabindex="-1"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">"Fonte de áudio inválida"</span>)<span class="op">;</span></span>
+<span id="cb19-552"><a href="#cb19-552" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div id="ojs-cell-17" data-nodetype="declaration" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+<div class="cell hidden html-fill-item html-fill-container">
+<div class="code-copy-outer-scaffold html-fill-item html-fill-container"><div class="sourceCode cell-code hidden html-fill-item html-fill-container" id="cb20" data-startfrom="559" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 558;"><span id="cb20-559"><a href="#cb20-559" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb20-560"><a href="#cb20-560" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>audioSource <span class="op">||</span> <span class="op">!</span><span class="bu">window</span><span class="op">.</span><span class="at">AudioProcessor</span>) {</span>
+<span id="cb20-561"><a href="#cb20-561" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">html</span><span class="vs">`&lt;div style="color:#b3b3b3;"&gt;Aguarda carregamento...&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb20-562"><a href="#cb20-562" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb20-563"><a href="#cb20-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-564"><a href="#cb20-564" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span>) {</span>
+<span id="cb20-565"><a href="#cb20-565" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> {</span>
+<span id="cb20-566"><a href="#cb20-566" aria-hidden="true" tabindex="-1"></a>      <span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span><span class="op">.</span><span class="at">stop</span><span class="op">?.</span>()<span class="op">;</span></span>
+<span id="cb20-567"><a href="#cb20-567" aria-hidden="true" tabindex="-1"></a>      <span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span><span class="op">.</span><span class="at">audioContext</span><span class="op">?.</span><span class="at">close</span><span class="op">?.</span>()<span class="op">;</span></span>
+<span id="cb20-568"><a href="#cb20-568" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">catch</span> (e) {}</span>
+<span id="cb20-569"><a href="#cb20-569" aria-hidden="true" tabindex="-1"></a>    <span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span> <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb20-570"><a href="#cb20-570" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb20-571"><a href="#cb20-571" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-572"><a href="#cb20-572" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> file <span class="op">=</span> <span class="cf">await</span> <span class="fu">loadSourceAsFile</span>(audioSource)<span class="op">;</span></span>
+<span id="cb20-573"><a href="#cb20-573" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-574"><a href="#cb20-574" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> audioProcessor <span class="op">=</span> <span class="kw">new</span> <span class="bu">window</span><span class="op">.</span><span class="fu">AudioProcessor</span>()<span class="op">;</span></span>
+<span id="cb20-575"><a href="#cb20-575" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-576"><a href="#cb20-576" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> audioProcessor<span class="op">.</span><span class="fu">loadAudioFile</span>(file)<span class="op">;</span></span>
+<span id="cb20-577"><a href="#cb20-577" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-578"><a href="#cb20-578" aria-hidden="true" tabindex="-1"></a>  <span class="bu">window</span><span class="op">.</span><span class="at">__currentAudioProcessor</span> <span class="op">=</span> audioProcessor<span class="op">;</span></span>
+<span id="cb20-579"><a href="#cb20-579" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-580"><a href="#cb20-580" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Atualizar estado</span></span>
+<span id="cb20-581"><a href="#cb20-581" aria-hidden="true" tabindex="-1"></a>  mutable isPlaying <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb20-582"><a href="#cb20-582" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-583"><a href="#cb20-583" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> visualizer <span class="op">=</span> <span class="kw">new</span> <span class="bu">window</span><span class="op">.</span><span class="fu">VisualizationEngine</span>(<span class="st">"canva"</span><span class="op">,</span> audioProcessor)<span class="op">;</span></span>
+<span id="cb20-584"><a href="#cb20-584" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-585"><a href="#cb20-585" aria-hidden="true" tabindex="-1"></a>  visualizer<span class="op">.</span><span class="fu">setVisualization</span>(<span class="st">"waveform"</span>)<span class="op">;</span></span>
+<span id="cb20-586"><a href="#cb20-586" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden html-fill-item html-fill-container">
+<div id="ojs-cell-18" data-nodetype="expression" class="html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+
+
+<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgXG4gICAgPGlmcmFtZSBcbiAgICAgICAgZGF0YS10ZXN0aWQ9XCJlbWJlZC1pZnJhbWVcIiBcbiAgICAgICAgc3R5bGU9XCJib3JkZXItcmFkaXVzOjEycHhcIiBcbiAgICAgICAgc3JjPVwiaHR0cHM6Ly9vcGVuLnNwb3RpZnkuY29tL2VtYmVkL3BsYXlsaXN0LzM3aTlkUVpGMURYY0JXSUdvWUJNNU0/dXRtX3NvdXJjZT1nZW5lcmF0b3JcIiBcbiAgICAgICAgd2lkdGg9XCIxMDAlXCIgaGVpZ2h0PVwiODAwXCJcbiAgICAgICAgZnJhbWVCb3JkZXI9XCIwXCIgXG4gICAgICAgIGFsbG93ZnVsbHNjcmVlbj1cIlwiIFxuICAgICAgICBhbGxvdz1cImF1dG9wbGF5OyBjbGlwYm9hcmQtd3JpdGU7IGVuY3J5cHRlZC1tZWRpYTsgcGljdHVyZS1pbi1waWN0dXJlXCIgXG4gICAgICAgIGxvYWRpbmc9XCJsYXp5XCI+XG4gICAgPC9pZnJhbWU+XG5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmh0bWxgXG4gIDxpZnJhbWUgXG4gICAgZGF0YS10ZXN0aWQ9XCJlbWJlZC1pZnJhbWVcIiBcbiAgICBzdHlsZT1cImJvcmRlci1yYWRpdXM6MTJweFwiIFxuICAgIHNyYz1cImh0dHBzOi8vb3Blbi5zcG90aWZ5LmNvbS9lbWJlZC9wbGF5bGlzdC8zN2k5ZFFaRVZYYkt5SlM1NmQxcGdpP3V0bV9zb3VyY2U9Z2VuZXJhdG9yXCIgXG4gICAgd2lkdGg9XCIxMDAlXCIgaGVpZ2h0PVwiMzkwXCIgXG4gICAgZnJhbWVCb3JkZXI9XCIwXCIgXG4gICAgYWxsb3dmdWxsc2NyZWVuPVwiXCIgXG4gICAgYWxsb3c9XCJhdXRvcGxheTsgY2xpcGJvYXJkLXdyaXRlOyBlbmNyeXB0ZWQtbWVkaWE7IHBpY3R1cmUtaW4tcGljdHVyZVwiIGxvYWRpbmc9XCJsYXp5XCI+XG4gIDwvaWZyYW1lPlxuYFxuXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmh0bWxgXG4gIDxpZnJhbWUgXG4gICAgZGF0YS10ZXN0aWQ9XCJlbWJlZC1pZnJhbWVcIiBcbiAgICBzdHlsZT1cImJvcmRlci1yYWRpdXM6MTJweFwiIFxuICAgIHNyYz1cImh0dHBzOi8vb3Blbi5zcG90aWZ5LmNvbS9lbWJlZC9wbGF5bGlzdC8zN2k5ZFFaRVZYYk1Eb0hEd1ZOMnRGP3V0bV9zb3VyY2U9Z2VuZXJhdG9yXCIgXG4gICAgd2lkdGg9XCIxMDAlXCIgaGVpZ2h0PVwiMzkwXCIgXG4gICAgZnJhbWVCb3JkZXI9XCIwXCIgXG4gICAgYWxsb3dmdWxsc2NyZWVuPVwiXCIgXG4gICAgYWxsb3c9XCJhdXRvcGxheTsgY2xpcGJvYXJkLXdyaXRlOyBlbmNyeXB0ZWQtbWVkaWE7IHBpY3R1cmUtaW4tcGljdHVyZVwiIGxvYWRpbmc9XCJsYXp5XCI+XG4gIDwvaWZyYW1lPlxuYFxuXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmJlZm9yZVRva2VuID0gKCkgPT4ge1xuICBodG1sYDxkaXYgc3R5bGU9XCJjb2xvcjojYjNiM2IzOyBwYWRkaW5nOiAxcmVtO1wiPlxuICAgIEludHJvZHV6IG8gdGV1IFNwb3RpZnkgYWNjZXNzIHRva2VuIHBhcmEgY2FycmVnYXIgb3MgZGFkb3MuXG4gIDwvZGl2PmBcbn1cblxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC01IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG5mZXRjaFdlYkFwaSA9IGFzeW5jIChlbmRwb2ludCwgbWV0aG9kLCBib2R5KSA9PiB7XG4gICAgaWYoIXRva2VuKSBcbiAgICAgIC8vIFNlIG7Do28gZXhpc3RpciB1bSB0b2tlbiwgbsOjbyBjaGFtYSBhIEFQSVxuICAgICAgcmV0dXJuIG51bGw7XG4gICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goYGh0dHBzOi8vYXBpLnNwb3RpZnkuY29tLyR7ZW5kcG9pbnR9YCwge1xuICAgICAgICBoZWFkZXJzOiB7XG4gICAgICAgIEF1dGhvcml6YXRpb246IGBCZWFyZXIgJHt0b2tlbn1gLFxuICAgICAgICB9LFxuICAgICAgICBtZXRob2QsXG4gICAgICAgIGJvZHk6IGJvZHkgPyBKU09OLnN0cmluZ2lmeShib2R5KSA6IHVuZGVmaW5lZFxuICAgIH0pO1xuXG4gICAgLy8gU2UgbyB0b2tlbiBlc3RpdmVyIGludsOhbGlkbyBkZXZvbHZlIG51bGxcbiAgICBpZighcmVzLm9rKSByZXR1cm4gbnVsbDtcbiAgICAgXG4gICAgcmV0dXJuIGF3YWl0IHJlcy5qc29uKCk7XG59XG5cbmdldFVzZXJQcm9maWxlID0gYXN5bmMgKCkgPT4ge1xuXG4gIGlmKCF0b2tlbikgcmV0dXJuIG51bGw7XG5cbiAgcmV0dXJuIGF3YWl0IGZldGNoV2ViQXBpKGB2MS9tZWAsIFwiR0VUXCIpO1xufVxuXG5nZXREaXNwbGF5VXNlclByb2ZpbGUgPSBhc3luYyAoaWQpID0+IHtcblxuICBpZighdG9rZW4gfHwgaWQgPT09IG51bGwpIHJldHVybiBudWxsO1xuXG4gIHJldHVybiBhd2FpdCBmZXRjaFdlYkFwaShgdjEvdXNlcnMvJHtpZH1gLCBcIkdFVFwiKTtcbn1cblxuYXV4UHJvZmlsZSA9IGF3YWl0IGdldFVzZXJQcm9maWxlKCk7XG5cbnVzZXJQcm9maWxlID0gYXdhaXQgZ2V0RGlzcGxheVVzZXJQcm9maWxlKGF1eFByb2ZpbGUuaWQpXG5cbmdldFRvcFRyYWNrcyA9IGFzeW5jICgpID0+IHtcbiAgXG4gIGlmKCF0b2tlbikgcmV0dXJuIFtdO1xuXG4gIHJldHVybiAoYXdhaXQgZmV0Y2hXZWJBcGkoXG4gICAgJ3YxL21lL3RvcC90cmFja3M/dGltZV9yYW5nZT1sb25nX3Rlcm0mbGltaXQ9NTAnLCAnR0VUJ1xuICApKS5pdGVtcztcbn1cblxudG9wVHJhY2tzID0gYXdhaXQgZ2V0VG9wVHJhY2tzKCk7XG5cbi8vIG11dGFibGUgc2VsZWN0ZWRUcmFjayA9IG51bGxcbi8vIG11dGFibGUgc2VsZWN0ZWRUcmFja1VSTCA9IG51bGxcblxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG5tdXRhYmxlIHNlbGVjdGVkVHJhY2sgPSB0b3BUcmFja3NbMF1cblxuc2VsZWN0ZWRUcmFja1VSTCA9IHNlbGVjdGVkVHJhY2suZXh0ZXJuYWxfdXJscy5zcG90aWZ5ICsgXCI/dXRtX3NvdXJjZT1nZW5lcmF0b3JcIlxuICAgIFxuaHRtbGBcbiAgPGlmcmFtZSBcbiAgICAgIGRhdGEtdGVzdGlkPVwiZW1iZWQtaWZyYW1lXCJcbiAgICAgIGlkPVwic3BvdGlmeS1lbWJlZFwiXG4gICAgICBzdHlsZT1cImJvcmRlci1yYWRpdXM6MTJweFwiIFxuICAgICAgc3JjPSBcImh0dHBzOi8vb3Blbi5zcG90aWZ5LmNvbS9lbWJlZC90cmFjay8ke3NlbGVjdGVkVHJhY2suaWR9P3V0bV9zb3VyY2U9Z2VuZXJhdG9yXCJcbiAgICAgIHdpZHRoPVwiMTAwJVwiIGhlaWdodD1cIjM1MlwiIFxuICAgICAgZnJhbWVCb3JkZXI9XCIwXCJcbiAgICAgIGFsbG93PVwiYXV0b3BsYXk7IGNsaXBib2FyZC13cml0ZTsgZW5jcnlwdGVkLW1lZGlhOyBwaWN0dXJlLWluLXBpY3R1cmU7XCIgXG4gICAgICBsb2FkaW5nPVwibGF6eVwiPlxuICA8L2lmcmFtZT5cbiAgYFxuXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmh0bWxgXG4gIDxkaXYgY2xhc3M9XCJ1c2VyLXByb2ZpbGUtY2FyZFwiPlxuICAgIDxkaXYgY2xhc3M9XCJ1c2VyLXByb2ZpbGUtbWFpblwiPlxuICAgICAgPGltZyBjbGFzcz1cInVzZXItYXZhdGFyXCJcbiAgICAgICAgc3JjPVwiJHsodXNlclByb2ZpbGUuaW1hZ2VzICYmIHVzZXJQcm9maWxlLmltYWdlcy5sZW5ndGggPiAwKVxuICAgICAgICAgICAgICA/IHVzZXJQcm9maWxlLmltYWdlc1swXS51cmxcbiAgICAgICAgICAgICAgOiAnYXNzZXRzL2ltYWdlcy9ERUZBVUxUX0FWQVRBUi5wbmcnfVwiPlxuICAgICAgPGRpdiBjbGFzcz1cInVzZXItcHJvZmlsZS10ZXh0XCI+XG4gICAgICAgIDxkaXYgY2xhc3M9XCJ1c2VyLWRpc3BsYXktbmFtZVwiPiR7dXNlclByb2ZpbGUuZGlzcGxheV9uYW1lfTwvZGl2PlxuICAgICAgICA8ZGl2IGNsYXNzPVwidXNlci1pZFwiPkAke3VzZXJQcm9maWxlLmlkfTwvZGl2PlxuICAgICAgPC9kaXY+XG4gICAgPC9kaXY+XG5cbiAgICA8ZGl2IGNsYXNzPVwidXNlci1mb2xsb3dlcnNcIj5cbiAgICAgICR7KHVzZXJQcm9maWxlLmZvbGxvd2VycyAmJiB1c2VyUHJvZmlsZS5mb2xsb3dlcnMudG90YWwpXG4gICAgICAgID8gdXNlclByb2ZpbGUuZm9sbG93ZXJzLnRvdGFsXG4gICAgICAgIDogMH0gZm9sbG93ZXJzXG4gICAgPC9kaXY+XG5cbiAgICA8YSBjbGFzcz1cInVzZXItcHJvZmlsZS1idXR0b25cIlxuICAgICAgIGhyZWY9XCIkeyh1c2VyUHJvZmlsZSkgPyB1c2VyUHJvZmlsZS5leHRlcm5hbF91cmxzLnNwb3RpZnkgOiBcImh0dHBzOi8vb3Blbi5zcG90aWZ5LmNvbS9wbGF5bGlzdC81QUJIS0dvT3p4a2FhMjh0dFFWOXNFXCJ9XCJcbiAgICAgICB0YXJnZXQ9XCJfYmxhbmtcIlxuICAgICAgIHJlbD1cIm5vb3BlbmVyIG5vcmVmZXJyZXJcIj5cbiAgICAgIEFicmlyIHBlcmZpbCBubyBTcG90aWZ5XG4gICAgPC9hPlxuICA8L2Rpdj5cbmBcblxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG52aWV3b2YgdXNlclRva2VuID0ge1xuICBjb25zdCBmb3JtID0gaHRtbGBcbiAgICA8ZGl2IGNsYXNzPVwidG9rZW4taW5wdXRcIj5cbiAgICAgIDxsYWJlbCBjbGFzcz1cInRva2VuLWxhYmVsXCI+XG4gICAgICAgIFNwb3RpZnkgYWNjZXNzIHRva2VuXG4gICAgICA8L2xhYmVsPlxuICAgICAgPGlucHV0XG4gICAgICAgIGNsYXNzPVwidXNlci10b2tlbi1pbnB1dFwiXG4gICAgICAgIHR5cGU9XCJ0ZXh0XCJcbiAgICAgICAgcGxhY2Vob2xkZXI9XCJDb2xhIGFxdWkgbyB0ZXUgdG9rZW4uLi5cIlxuICAgICAgPlxuICAgICAgXG4gICAgICA8ZGl2IHN0eWxlPVwibWFyZ2luLXRvcDogNHB4OyBmb250LXNpemU6IDAuNzVyZW07IGNvbG9yOiAjYjNiM2IzO1wiPlxuICAgICAgICBBaW5kYSBuw6NvIHRlbnMgdG9rZW4/XG4gICAgICAgIDxhIGhyZWY9XCJodHRwczovL2RldmVsb3Blci5zcG90aWZ5LmNvbVwiXG4gICAgICAgICAgIHRhcmdldD1cIl9ibGFua1wiXG4gICAgICAgICAgIHJlbD1cIm5vb3BlbmVyIG5vcmVmZXJyZXJcIlxuICAgICAgICAgICBzdHlsZT1cImNvbG9yOiAjMWRiOTU0OyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTtcIj5cbiAgICAgICAgICBDbGljYSBhcXVpXG4gICAgICAgIDwvYT5cbiAgICAgICAgIHBhcmEgdmVyIGNvbW8gb2J0ZXIgdW0uXG4gICAgICA8L2Rpdj5cbiAgICA8L2Rpdj5cbiAgYDtcblxuICBjb25zdCBpbnB1dCA9IGZvcm0ucXVlcnlTZWxlY3RvcihcImlucHV0XCIpO1xuXG4gIGZvcm0udmFsdWUgPSBpbnB1dC52YWx1ZTtcbiAgaW5wdXQub25pbnB1dCA9ICgpID0+IHtcbiAgICBmb3JtLnZhbHVlID0gaW5wdXQudmFsdWU7XG4gIH07XG5cbiAgcmV0dXJuIGZvcm07XG59XG5cbi8vIHZhcmnDoXZlbCDigJxub3JtYWzigJ0gY29tIG8gdmFsb3IgYXR1YWwgZG8gdG9rZW5cbnRva2VuID0gdXNlclRva2VuXG5cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ii8vIENvbnZlcnRlciBtaWxpc3NlZ3VuZG9zIGVtIG1tOnNzXG5mb3JtYXREdXJhdGlvbiA9IChtcykgPT4ge1xuICAgIGNvbnN0IG1pbnV0ZXMgPSBNYXRoLmZsb29yKG1zIC8gNjAwMDApO1xuICAgIGNvbnN0IHNlY29uZHMgPSAoKG1zICUgNjAwMDApIC8gMTAwMCkudG9GaXhlZCgwKTtcbiAgICByZXR1cm4gYCR7bWludXRlc306JHtzZWNvbmRzIDwgMTAgPyAnMCcgOiAnJ30ke3NlY29uZHN9YDtcbn1cblxuLy8gUmVuZGVyaXphw6fDo28gZGEgbGlzdGFcbntcbiAgLy8gQ3JpYW1vcyBvIGNvbnRhaW5lciBwcmluY2lwYWxcbiAgICBjb25zdCBjb250YWluZXIgPSBodG1sYDxkaXYgY2xhc3M9XCJ0cmFjay1saXN0LWNvbnRhaW5lclwiPiR7dG9wVHJhY2tzLm1hcCh0cmFjayA9PiB7XG4gICAgICAgIGNvbnN0IHJvdyA9IGh0bWxgXG4gICAgICAgICAgICA8ZGl2IGNsYXNzPVwidHJhY2staXRlbSAke3RyYWNrLmlkID09PSBzZWxlY3RlZFRyYWNrLmlkID8gJ2FjdGl2ZScgOiAnJ31cIj5cbiAgICAgICAgICAgICAgICA8aW1nIGNsYXNzPVwidHJhY2staW1nXCIgc3JjPVwiJHt0cmFjay5hbGJ1bS5pbWFnZXNbMl0/LnVybH1cIj5cbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwidHJhY2staW5mb1wiPlxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwidHJhY2stbmFtZVwiPiR7dHJhY2submFtZX08L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cInRyYWNrLWFydGlzdFwiPiR7dHJhY2suYXJ0aXN0cy5tYXAoYSA9PiBhLm5hbWUpLmpvaW4oJywgJyl9PC9kaXY+XG4gICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cInRyYWNrLWR1cmF0aW9uXCI+JHtmb3JtYXREdXJhdGlvbih0cmFjay5kdXJhdGlvbl9tcyl9PC9kaXY+XG4gICAgICAgICAgICA8L2Rpdj5gO1xuICAgICAgICBcbiAgICAgICAgcm93Lm9uY2xpY2sgPSAoKSA9PiB7XG4gICAgICAgICAgICBtdXRhYmxlIHNlbGVjdGVkVHJhY2sgPSB0cmFjaztcbiAgICAgICAgfTtcbiAgICAgICAgXG4gICAgICAgIHJldHVybiByb3c7XG4gICAgICAgIH0pfVxuICAgICAgICA8L2Rpdj5gO1xuXG4gICAgcmV0dXJuIGNvbnRhaW5lcjtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTAiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmxvY2FsQXVkaW9GaWxlcyA9IGF3YWl0IGZldGNoKFwiYXNzZXRzL2RhdGEvbG9jYWxUb3BUcmFja3MuanNvblwiKVxuICAudGhlbihyZXNwb25zZSA9PiByZXNwb25zZS5qc29uKCkpXG4gIC5jYXRjaCgoKSA9PiBbXSlcblxubXV0YWJsZSBzZWxlY3RlZExvY2FsVHJhY2sgPSBudWxsXG5tdXRhYmxlIGF1ZGlvU291cmNlID0gbnVsbFxuXG5tdXRhYmxlIGlzUGxheWluZyA9IGZhbHNlXG5tdXRhYmxlIGN1cnJlbnRUcmFja0luZGV4ID0gMFxuXG5tdXRhYmxlIGN1cnJlbnRWb2x1bWUgPSA1MFxuXG5mdW5jdGlvbiB1cGRhdGVQbGF5aW5nU3RhdGUoKSB7XG4gIGlmICh3aW5kb3cuX19jdXJyZW50QXVkaW9Qcm9jZXNzb3IpIHtcbiAgICBtdXRhYmxlIGlzUGxheWluZyA9IHdpbmRvdy5fX2N1cnJlbnRBdWRpb1Byb2Nlc3Nvci5nZXRJc1BsYXlpbmcoKTtcbiAgfVxufVxuXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTExIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG4vLyBQbGF5L1BhdXNlXG5wbGF5UGF1c2UgPSBhc3luYyAoKSA9PiB7XG4gIGlmICghd2luZG93Ll9fY3VycmVudEF1ZGlvUHJvY2Vzc29yKSByZXR1cm47XG4gIFxuICBhd2FpdCB3aW5kb3cuX19jdXJyZW50QXVkaW9Qcm9jZXNzb3IucmVzdW1lQXVkaW8oKTtcbiAgdXBkYXRlUGxheWluZ1N0YXRlKCk7XG59XG5cbi8vIFRyYWNrIGFudGVyaW9yXG5wcmV2aW91c1RyYWNrID0gYXN5bmMgKCkgPT4ge1xuICBpZiAobG9jYWxBdWRpb0ZpbGVzLmxlbmd0aCA9PT0gMCkgcmV0dXJuO1xuICBcbiAgY29uc3QgbmV3SW5kZXggPSBjdXJyZW50VHJhY2tJbmRleCA+IDAgXG4gICAgPyBjdXJyZW50VHJhY2tJbmRleCAtIDEgXG4gICAgOiBsb2NhbEF1ZGlvRmlsZXMubGVuZ3RoIC0gMTtcbiAgXG4gIG11dGFibGUgY3VycmVudFRyYWNrSW5kZXggPSBuZXdJbmRleDtcbiAgbXV0YWJsZSBzZWxlY3RlZExvY2FsVHJhY2sgPSBsb2NhbEF1ZGlvRmlsZXNbbmV3SW5kZXhdO1xuICBtdXRhYmxlIGF1ZGlvU291cmNlID0gbG9jYWxBdWRpb0ZpbGVzW25ld0luZGV4XTtcbn1cblxuLy8gUHLDs3hpbWEgdHJhY2tcbm5leHRUcmFjayA9IGFzeW5jICgpID0+IHtcbiAgaWYgKGxvY2FsQXVkaW9GaWxlcy5sZW5ndGggPT09IDApIHJldHVybjtcbiAgXG4gIGNvbnN0IG5ld0luZGV4ID0gKGN1cnJlbnRUcmFja0luZGV4ICsgMSkgJSBsb2NhbEF1ZGlvRmlsZXMubGVuZ3RoO1xuICBcbiAgbXV0YWJsZSBjdXJyZW50VHJhY2tJbmRleCA9IG5ld0luZGV4O1xuICBtdXRhYmxlIHNlbGVjdGVkTG9jYWxUcmFjayA9IGxvY2FsQXVkaW9GaWxlc1tuZXdJbmRleF07XG4gIG11dGFibGUgYXVkaW9Tb3VyY2UgPSBsb2NhbEF1ZGlvRmlsZXNbbmV3SW5kZXhdO1xuICBcbn1cblxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IntcbiAgY29uc3QgY29udGFpbmVyID0gaHRtbGA8ZGl2IGNsYXNzPVwidHJhY2stbGlzdC1jb250YWluZXIgbG9jYWwtdHJhY2tzXCI+JHtsb2NhbEF1ZGlvRmlsZXMubWFwKCh0cmFjaywgaW5kZXgpID0+IHtcbiAgICBjb25zdCByb3cgPSBodG1sYFxuICAgICAgPGRpdiBjbGFzcz1cInRyYWNrLWl0ZW0gJHt0cmFjayA9PT0gc2VsZWN0ZWRMb2NhbFRyYWNrID8gJ2FjdGl2ZScgOiAnJ31cIj5cbiAgICAgICAgPGltZyBjbGFzcz1cInRyYWNrLWltZ1wiIHNyYz1cIiR7dHJhY2suaW1nfVwiPlxuICAgICAgICA8ZGl2IGNsYXNzPVwidHJhY2staW5mb1wiPlxuICAgICAgICAgIDxkaXYgY2xhc3M9XCJ0cmFjay1uYW1lXCI+JHt0cmFjay5uYW1lfTwvZGl2PlxuICAgICAgICAgIDxkaXYgY2xhc3M9XCJ0cmFjay1hcnRpc3RcIj4ke3RyYWNrLmFydGlzdH08L2Rpdj5cbiAgICAgICAgPC9kaXY+XG4gICAgICAgIDxkaXYgY2xhc3M9XCJ0cmFjay1kdXJhdGlvblwiPiR7dHJhY2suZHVyYXRpb259PC9kaXY+XG4gICAgICA8L2Rpdj5gO1xuICAgIFxuICAgIHJvdy5vbmNsaWNrID0gKCkgPT4ge1xuICAgICAgbXV0YWJsZSBjdXJyZW50VHJhY2tJbmRleCA9IGluZGV4O1xuICAgICAgbXV0YWJsZSBzZWxlY3RlZExvY2FsVHJhY2sgPSB0cmFjaztcbiAgICAgIG11dGFibGUgYXVkaW9Tb3VyY2UgPSB0cmFjaztcbiAgICB9O1xuICAgIFxuICAgIHJldHVybiByb3c7XG4gIH0pfTwvZGl2PmA7XG4gIHJldHVybiBjb250YWluZXI7XG59XG5cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbi8vIENvbnRyb2xvcyBnZXJhZG9zIGNvbSBhIGFqdWRhIGRlIExMTVxudmlld29mIGNvbnRyb2wgPSB7XG4gIGNvbnN0IGNvbnRyb2xzID0gaHRtbGBcbiAgICA8ZGl2IGNsYXNzPVwiYXVkaW8tY29udHJvbHNcIj5cbiAgICAgIDxidXR0b24gY2xhc3M9XCJjb250cm9sLWJ0blwiIHRpdGxlPVwiQW50ZXJpb3JcIj5cbiAgICAgICAgPHN2ZyB3aWR0aD1cIjI0XCIgaGVpZ2h0PVwiMjRcIiB2aWV3Qm94PVwiMCAwIDI0IDI0XCIgZmlsbD1cImN1cnJlbnRDb2xvclwiPlxuICAgICAgICAgIDxwYXRoIGQ9XCJNNiA2aDJ2MTJINnptMy41IDZsOC41IDZWNnpcIi8+XG4gICAgICAgIDwvc3ZnPlxuICAgICAgPC9idXR0b24+XG4gICAgICBcbiAgICAgIDxidXR0b24gY2xhc3M9XCJjb250cm9sLWJ0biBjb250cm9sLWJ0bi1tYWluXCIgdGl0bGU9XCIke2lzUGxheWluZyA/ICdQYXVzYXInIDogJ1JlcHJvZHV6aXInfVwiPlxuICAgICAgICAke2lzUGxheWluZyBcbiAgICAgICAgICA/IGh0bWxgPHN2ZyB3aWR0aD1cIjMyXCIgaGVpZ2h0PVwiMzJcIiB2aWV3Qm94PVwiMCAwIDI0IDI0XCIgZmlsbD1cImN1cnJlbnRDb2xvclwiPlxuICAgICAgICAgICAgICA8cGF0aCBkPVwiTTYgNGg0djE2SDZWNHptOCAwaDR2MTZoLTRWNHpcIi8+XG4gICAgICAgICAgICA8L3N2Zz5gXG4gICAgICAgICAgOiBodG1sYDxzdmcgd2lkdGg9XCIzMlwiIGhlaWdodD1cIjMyXCIgdmlld0JveD1cIjAgMCAyNCAyNFwiIGZpbGw9XCJjdXJyZW50Q29sb3JcIj5cbiAgICAgICAgICAgICAgPHBhdGggZD1cIk04IDV2MTRsMTEtN3pcIi8+XG4gICAgICAgICAgICA8L3N2Zz5gXG4gICAgICAgIH1cbiAgICAgIDwvYnV0dG9uPlxuICAgICAgXG4gICAgICA8YnV0dG9uIGNsYXNzPVwiY29udHJvbC1idG5cIiB0aXRsZT1cIlByw7N4aW1hXCI+XG4gICAgICAgIDxzdmcgd2lkdGg9XCIyNFwiIGhlaWdodD1cIjI0XCIgdmlld0JveD1cIjAgMCAyNCAyNFwiIGZpbGw9XCJjdXJyZW50Q29sb3JcIj5cbiAgICAgICAgICA8cGF0aCBkPVwiTTYgMThsOC41LTZMNiA2djEyek0xNiA2djEyaDJWNmgtMnpcIi8+XG4gICAgICAgIDwvc3ZnPlxuICAgICAgPC9idXR0b24+XG4gICAgPC9kaXY+XG4gIGA7XG4gIFxuICBjb25zdCBidXR0b25zID0gY29udHJvbHMucXVlcnlTZWxlY3RvckFsbCgnLmNvbnRyb2wtYnRuJyk7XG4gIGJ1dHRvbnNbMF0ub25jbGljayA9IHByZXZpb3VzVHJhY2s7XG4gIGJ1dHRvbnNbMV0ub25jbGljayA9IHBsYXlQYXVzZTtcbiAgYnV0dG9uc1syXS5vbmNsaWNrID0gbmV4dFRyYWNrO1xuICBcbiAgcmV0dXJuIGNvbnRyb2xzO1xufVxuXG52aWV3b2Ygdm9sdW1lU2xpZGVyID0ge1xuICBjb25zdCBmb3JtID0gaHRtbGBcbiAgICA8ZGl2IGNsYXNzPVwidm9sdW1lLWNvbnRyb2xcIj5cbiAgICAgIDxsYWJlbCBjbGFzcz1cInZvbHVtZS1sYWJlbFwiPlxuICAgICAgICA8c3ZnIHdpZHRoPVwiMjBcIiBoZWlnaHQ9XCIyMFwiIHZpZXdCb3g9XCIwIDAgMjQgMjRcIiBmaWxsPVwiY3VycmVudENvbG9yXCI+XG4gICAgICAgICAgPHBhdGggZD1cIk0zIDl2Nmg0bDUgNVY0TDcgOUgzem0xMy41IDNjMC0xLjc3LTEuMDItMy4yOS0yLjUtNC4wM3Y4LjA1YzEuNDgtLjczIDIuNS0yLjI1IDIuNS00LjAyek0xNCAzLjIzdjIuMDZjMi44OS44NiA1IDMuNTQgNSA2Ljcxcy0yLjExIDUuODUtNSA2LjcxdjIuMDZjNC4wMS0uOTEgNy00LjQ5IDctOC43N3MtMi45OS03Ljg2LTctOC43N3pcIi8+XG4gICAgICAgIDwvc3ZnPlxuICAgICAgICBWb2x1bWVcbiAgICAgIDwvbGFiZWw+XG4gICAgICA8ZGl2IGNsYXNzPVwidm9sdW1lLXNsaWRlci1jb250YWluZXJcIj5cbiAgICAgICAgPGlucHV0IFxuICAgICAgICAgIHR5cGU9XCJyYW5nZVwiIFxuICAgICAgICAgIG1pbj1cIjBcIiBcbiAgICAgICAgICBtYXg9XCIxMDBcIiBcbiAgICAgICAgICBzdGVwPVwiMVwiIFxuICAgICAgICAgIHZhbHVlPVwiNTBcIlxuICAgICAgICAgIGNsYXNzPVwidm9sdW1lLXNsaWRlclwiPlxuICAgICAgICA8c3BhbiBjbGFzcz1cInZvbHVtZS12YWx1ZVwiPjUwJTwvc3Bhbj5cbiAgICAgIDwvZGl2PlxuICAgIDwvZGl2PlxuICBgO1xuICBcbiAgY29uc3QgaW5wdXQgPSBmb3JtLnF1ZXJ5U2VsZWN0b3IoJ2lucHV0Jyk7XG4gIGNvbnN0IHZhbHVlRGlzcGxheSA9IGZvcm0ucXVlcnlTZWxlY3RvcignLnZvbHVtZS12YWx1ZScpO1xuICBcbiAgZm9ybS52YWx1ZSA9ICtpbnB1dC52YWx1ZTtcbiAgXG4gIGlucHV0Lm9uaW5wdXQgPSAoKSA9PiB7XG4gICAgZm9ybS52YWx1ZSA9ICtpbnB1dC52YWx1ZTtcbiAgICB2YWx1ZURpc3BsYXkudGV4dENvbnRlbnQgPSBgJHtpbnB1dC52YWx1ZX0lYDtcbiAgICBmb3JtLmRpc3BhdGNoRXZlbnQobmV3IEV2ZW50KCdpbnB1dCcpKTtcbiAgfTtcbiAgXG4gIHJldHVybiBmb3JtO1xufVxuXG5cbnZpZXdvZiBhdWRpb0ZpbGUgPSB7XG4gIGNvbnN0IGZvcm0gPSBodG1sYFxuICAgIDxkaXYgY2xhc3M9XCJhdWRpby11cGxvYWRcIj5cbiAgICAgIDxsYWJlbCBzdHlsZT1cImZvbnQtd2VpZ2h0OiAyMDA7IGRpc3BsYXk6IGJsb2NrO1wiPlxuICAgICAgICBFc2NvbGhhIHVtIGZpY2hlaXJvIGRlIMOhdWRpb1xuICAgICAgPC9sYWJlbD5cbiAgICAgIDxpbnB1dCBcbiAgICAgICAgdHlwZT1cImZpbGVcIiBcbiAgICAgICAgYWNjZXB0PVwiYXVkaW8vKlwiXG4gICAgICAgIHN0eWxlPVwid2lkdGg6IDEwMCU7IHBhZGRpbmc6IDhweDsgYm9yZGVyLXJhZGl1czogNHB4OyBib3JkZXI6IDFweCBzb2xpZCAjNDQ0O1wiPlxuICAgIDwvZGl2PmA7XG4gIFxuICBjb25zdCBpbnB1dCA9IGZvcm0ucXVlcnlTZWxlY3RvcihcImlucHV0XCIpO1xuICBmb3JtLnZhbHVlID0gbnVsbDtcbiAgXG4gIGlucHV0Lm9uY2hhbmdlID0gKCkgPT4ge1xuICAgIGZvcm0udmFsdWUgPSBpbnB1dC5maWxlcztcbiAgfTtcbiAgXG4gIHJldHVybiBmb3JtO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ilxue1xuICBjb25zdCBoYW5kbGVLZXlQcmVzcyA9IChlKSA9PiB7XG4gICAgaWYgKGUudGFyZ2V0LnRhZ05hbWUgPT09ICdJTlBVVCcgfHwgZS50YXJnZXQudGFnTmFtZSA9PT0gJ1RFWFRBUkVBJykgcmV0dXJuO1xuICAgIFxuICAgIGlmIChlLmNvZGUgPT09ICdTcGFjZScpIHtcbiAgICAgIGUucHJldmVudERlZmF1bHQoKTtcbiAgICAgIHBsYXlQYXVzZSgpO1xuICAgIH0gZWxzZSBpZiAoZS5jb2RlID09PSAnQXJyb3dMZWZ0Jykge1xuICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpO1xuICAgICAgcHJldmlvdXNUcmFjaygpO1xuICAgIH0gZWxzZSBpZiAoZS5jb2RlID09PSAnQXJyb3dSaWdodCcpIHtcbiAgICAgIGUucHJldmVudERlZmF1bHQoKTtcbiAgICAgIG5leHRUcmFjaygpO1xuICAgIH1cbiAgfTtcbiAgXG4gIGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ2tleWRvd24nLCBoYW5kbGVLZXlQcmVzcyk7XG4gIHJldHVybiBcIkF0YWxob3MgZGUgdGVjbGFkbyBhdGl2YWRvc1wiO1xufVxuXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE1IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG5odG1sYDxjYW52YXMgaWQ9XCJjYW52YVwiPjwvY2FudmFzPmBcblxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ilxue1xuICBjb25zdCB7IEF1ZGlvUHJvY2Vzc29yIH0gPSBhd2FpdCBpbXBvcnQoJy9hc3NldHMvanMvQXVkaW9Qcm9jZXNzb3IuanMnKTtcbiAgY29uc3QgeyBWaXN1YWxpemF0aW9uRW5naW5lIH0gPSBhd2FpdCBpbXBvcnQoJy9hc3NldHMvanMvVmlzdWFsaXphdGlvbkVuZ2luZS5qcycpXG5cbiAgd2luZG93LkF1ZGlvUHJvY2Vzc29yID0gQXVkaW9Qcm9jZXNzb3I7XG4gIHdpbmRvdy5WaXN1YWxpemF0aW9uRW5naW5lID0gVmlzdWFsaXphdGlvbkVuZ2luZTtcblxuICB3aW5kb3cuX19jdXJyZW50QXVkaW9Qcm9jZXNzb3IgPSBudWxsO1xufVxue1xuICBpZiAoYXVkaW9GaWxlPy5sZW5ndGggPiAwKSB7XG4gICAgbXV0YWJsZSBhdWRpb1NvdXJjZSA9IGF1ZGlvRmlsZVswXTtcbiAgfVxuICByZXR1cm5cbn1cbntcbiAgbXV0YWJsZSBjdXJyZW50Vm9sdW1lID0gdm9sdW1lU2xpZGVyO1xuICBcbiAgaWYgKHdpbmRvdy5fX2N1cnJlbnRBdWRpb1Byb2Nlc3Nvcikge1xuICAgIHdpbmRvdy5fX2N1cnJlbnRBdWRpb1Byb2Nlc3Nvci5jYWxjdWxhdGVBdWRpb0xldmVsKHZvbHVtZVNsaWRlcik7XG4gICAgY29uc29sZS5sb2coXCJWb2x1bWUgZGVmaW5pZG8gcGFyYTpcIiwgdm9sdW1lU2xpZGVyICsgXCIlXCIpO1xuICB9XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE3IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG5hc3luYyBmdW5jdGlvbiBsb2FkU291cmNlQXNGaWxlKHNvdXJjZSkge1xuICBcbiAgaWYgKHNvdXJjZSBpbnN0YW5jZW9mIEZpbGUpIHtcbiAgICByZXR1cm4gc291cmNlO1xuICB9XG5cbiAgaWYgKHNvdXJjZT8ucGF0aCkge1xuICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmV0Y2goc291cmNlLnBhdGgpO1xuICAgIGNvbnN0IGJsb2IgPSBhd2FpdCByZXNwb25zZS5ibG9iKCk7XG5cbiAgICByZXR1cm4gbmV3IEZpbGUoXG4gICAgICBbYmxvYl0sXG4gICAgICBzb3VyY2UubmFtZSA/PyBcImF1ZGlvLm1wM1wiLFxuICAgICAgeyB0eXBlOiBibG9iLnR5cGUgfHwgXCJhdWRpby9tcGVnXCIgfVxuICAgICk7XG4gIH1cblxuICB0aHJvdyBuZXcgRXJyb3IoXCJGb250ZSBkZSDDoXVkaW8gaW52w6FsaWRhXCIpO1xufVxuXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTE4IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG57XG4gIGlmICghYXVkaW9Tb3VyY2UgfHwgIXdpbmRvdy5BdWRpb1Byb2Nlc3Nvcikge1xuICAgIHJldHVybiBodG1sYDxkaXYgc3R5bGU9XCJjb2xvcjojYjNiM2IzO1wiPkFndWFyZGEgY2FycmVnYW1lbnRvLi4uPC9kaXY+YDtcbiAgfVxuXG4gIGlmICh3aW5kb3cuX19jdXJyZW50QXVkaW9Qcm9jZXNzb3IpIHtcbiAgICB0cnkge1xuICAgICAgd2luZG93Ll9fY3VycmVudEF1ZGlvUHJvY2Vzc29yLnN0b3A/LigpO1xuICAgICAgd2luZG93Ll9fY3VycmVudEF1ZGlvUHJvY2Vzc29yLmF1ZGlvQ29udGV4dD8uY2xvc2U/LigpO1xuICAgIH0gY2F0Y2ggKGUpIHt9XG4gICAgd2luZG93Ll9fY3VycmVudEF1ZGlvUHJvY2Vzc29yID0gbnVsbDtcbiAgfVxuICBcbiAgY29uc3QgZmlsZSA9IGF3YWl0IGxvYWRTb3VyY2VBc0ZpbGUoYXVkaW9Tb3VyY2UpO1xuICBcbiAgY29uc3QgYXVkaW9Qcm9jZXNzb3IgPSBuZXcgd2luZG93LkF1ZGlvUHJvY2Vzc29yKCk7XG5cbiAgYXdhaXQgYXVkaW9Qcm9jZXNzb3IubG9hZEF1ZGlvRmlsZShmaWxlKTtcblxuICB3aW5kb3cuX19jdXJyZW50QXVkaW9Qcm9jZXNzb3IgPSBhdWRpb1Byb2Nlc3NvcjtcbiAgXG4gIC8vIEF0dWFsaXphciBlc3RhZG9cbiAgbXV0YWJsZSBpc1BsYXlpbmcgPSB0cnVlO1xuICBcbiAgY29uc3QgdmlzdWFsaXplciA9IG5ldyB3aW5kb3cuVmlzdWFsaXphdGlvbkVuZ2luZShcImNhbnZhXCIsIGF1ZGlvUHJvY2Vzc29yKTtcbiAgXG4gIHZpc3VhbGl6ZXIuc2V0VmlzdWFsaXphdGlvbihcIndhdmVmb3JtXCIpO1xufVxuXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3VzZXJUb2tlbicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdjb250cm9sJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3ZvbHVtZVNsaWRlcicpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdhdWRpb0ZpbGUnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (_event) {
+  if (window.bslib.Card) {
+    window.bslib.Card.initializeAllCards();
+  }
+}); 
+</script>
+  
+
+
+
+</body></html>

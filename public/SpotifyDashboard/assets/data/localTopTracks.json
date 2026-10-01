@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Die with a Smile",
+    "artist": "Lady Gaga, Bruno Mars",
+    "path": "assets/audio/DieWithASmile.wav",
+    "duration": "4:12",
+    "img": "assets/images/die-with-a-smile.jpg"
+  },
+  {
+    "name": "Birds of a Feather",
+    "artist": "Billie Eilish",
+    "path": "assets/audio/BIRDSOFAFEATHER.wav",
+    "duration": "3:50",
+    "img": "assets/images/birds-of-a-feather.jpg"
+  },
+  {
+    "name": "APT.",
+    "artist": "ROSÉ, Bruno Mars",
+    "path": "assets/audio/APT.wav",
+    "duration": "2:53",
+    "img": "assets/images/apt.jpg"
+  },
+  {
+    "name": "Ordinary",
+    "artist": "Alex Warren",
+    "path": "assets/audio/Ordinary.wav",
+    "duration": "3:06",
+    "img": "assets/images/ordinary.jpg"
+  },
+  {
+    "name": "Back to friends",
+    "artist": "sombr",
+    "path": "assets/audio/backtofriends.wav",
+    "duration": "3:21",
+    "img": "assets/images/back-to-friends.jpg"
+  },
+  {
+    "name": "DtMF",
+    "artist": "Bad Bunny",
+    "path": "assets/audio/DtMF.wav",
+    "duration": "4:00",
+    "img": "assets/images/dtmf.jpg"
+  },
+  {
+    "name": "Golden",
+    "artist": "KPop Demon Hunters Cast",
+    "path": "assets/audio/Golden.wav",
+    "duration": "3:18",
+    "img": "assets/images/golden.jpg"
+  },
+  {
+    "name": "Luther",
+    "artist": "Kendrick Lamar, SZA",
+    "path": "assets/audio/luther.wav",
+    "duration": "2:57",
+    "img": "assets/images/luther.jpg"
+  },
+  {
+    "name": "That's So True",
+    "artist": "Gracie Abrams",
+    "path": "assets/audio/ThatsSoTrue.wav",
+    "duration": "2:46",
+    "img": "assets/images/thats-so-true.jpg"
+  },
+  {
+    "name": "WILDFLOWER",
+    "artist": "Billie Eilish",
+    "path": "assets/audio/WILDFLOWER.wav",
+    "duration": "4:21",
+    "img": "assets/images/wildflower.jpg"
+  }
+]

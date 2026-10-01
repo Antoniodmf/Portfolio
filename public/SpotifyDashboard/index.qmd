@@ -1,0 +1,590 @@
+---
+title: ""
+format:
+    dashboard:
+        logo: "assets/images/Spotify_Full_Logo_RGB_Green.png"
+        orientation: columns
+        css: "assets/css/styles.css"
+        backgroundcolor: "#1f1f1f"
+        resources: "assets/**"
+---
+
+# Top Hits
+
+## Column {.no-scroll}
+
+```{ojs}
+html`
+    <iframe 
+        data-testid="embed-iframe" 
+        style="border-radius:12px" 
+        src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator" 
+        width="100%" height="800"
+        frameBorder="0" 
+        allowfullscreen="" 
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" 
+        loading="lazy">
+    </iframe>
+`
+```
+
+## Column
+
+### Row {.no-scroll height="50%"}
+
+```{ojs}
+
+html`
+  <iframe 
+    data-testid="embed-iframe" 
+    style="border-radius:12px" 
+    src="https://open.spotify.com/embed/playlist/37i9dQZEVXbKyJS56d1pgi?utm_source=generator" 
+    width="100%" height="390" 
+    frameBorder="0" 
+    allowfullscreen="" 
+    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" loading="lazy">
+  </iframe>
+`
+
+```
+
+### Row {.no-scroll height="50%"}
+
+```{ojs}
+
+html`
+  <iframe 
+    data-testid="embed-iframe" 
+    style="border-radius:12px" 
+    src="https://open.spotify.com/embed/playlist/37i9dQZEVXbMDoHDwVN2tF?utm_source=generator" 
+    width="100%" height="390" 
+    frameBorder="0" 
+    allowfullscreen="" 
+    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" loading="lazy">
+  </iframe>
+`
+
+```
+
+
+# Your Top
+
+## Column {width="45%"}
+
+```{ojs}
+//| output: false
+
+beforeToken = () => {
+  html`<div style="color:#b3b3b3; padding: 1rem;">
+    Introduz o teu Spotify access token para carregar os dados.
+  </div>`
+}
+
+```
+
+```{ojs}
+//| output: false
+
+fetchWebApi = async (endpoint, method, body) => {
+    if(!token) 
+      // Se não existir um token, não chama a API
+      return null;
+    const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+        headers: {
+        Authorization: `Bearer ${token}`,
+        },
+        method,
+        body: body ? JSON.stringify(body) : undefined
+    });
+
+    // Se o token estiver inválido devolve null
+    if(!res.ok) return null;
+     
+    return await res.json();
+}
+
+getUserProfile = async () => {
+
+  if(!token) return null;
+
+  return await fetchWebApi(`v1/me`, "GET");
+}
+
+getDisplayUserProfile = async (id) => {
+
+  if(!token || id === null) return null;
+
+  return await fetchWebApi(`v1/users/${id}`, "GET");
+}
+
+auxProfile = await getUserProfile();
+
+userProfile = await getDisplayUserProfile(auxProfile.id)
+
+getTopTracks = async () => {
+  
+  if(!token) return [];
+
+  return (await fetchWebApi(
+    'v1/me/top/tracks?time_range=long_term&limit=50', 'GET'
+  )).items;
+}
+
+topTracks = await getTopTracks();
+
+// mutable selectedTrack = null
+// mutable selectedTrackURL = null
+
+```
+
+### Row {height="55%" .track-card .no-scroll}
+
+```{ojs}
+
+mutable selectedTrack = topTracks[0]
+
+selectedTrackURL = selectedTrack.external_urls.spotify + "?utm_source=generator"
+    
+html`
+  <iframe 
+      data-testid="embed-iframe"
+      id="spotify-embed"
+      style="border-radius:12px" 
+      src= "https://open.spotify.com/embed/track/${selectedTrack.id}?utm_source=generator"
+      width="100%" height="352" 
+      frameBorder="0"
+      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture;" 
+      loading="lazy">
+  </iframe>
+  `
+
+```
+
+
+### Row {.no-scroll}
+
+```{ojs}
+
+html`
+  <div class="user-profile-card">
+    <div class="user-profile-main">
+      <img class="user-avatar"
+        src="${(userProfile.images && userProfile.images.length > 0)
+              ? userProfile.images[0].url
+              : 'assets/images/DEFAULT_AVATAR.png'}">
+      <div class="user-profile-text">
+        <div class="user-display-name">${userProfile.display_name}</div>
+        <div class="user-id">@${userProfile.id}</div>
+      </div>
+    </div>
+
+    <div class="user-followers">
+      ${(userProfile.followers && userProfile.followers.total)
+        ? userProfile.followers.total
+        : 0} followers
+    </div>
+
+    <a class="user-profile-button"
+       href="${(userProfile) ? userProfile.external_urls.spotify : "https://open.spotify.com/playlist/5ABHKGoOzxkaa28ttQV9sE"}"
+       target="_blank"
+       rel="noopener noreferrer">
+      Abrir perfil no Spotify
+    </a>
+  </div>
+`
+
+```
+
+### Row {.no-scroll}
+
+```{ojs}
+
+viewof userToken = {
+  const form = html`
+    <div class="token-input">
+      <label class="token-label">
+        Spotify access token
+      </label>
+      <input
+        class="user-token-input"
+        type="text"
+        placeholder="Cola aqui o teu token..."
+      >
+      
+      <div style="margin-top: 4px; font-size: 0.75rem; color: #b3b3b3;">
+        Ainda não tens token?
+        <a href="https://developer.spotify.com"
+           target="_blank"
+           rel="noopener noreferrer"
+           style="color: #1db954; text-decoration: underline;">
+          Clica aqui
+        </a>
+         para ver como obter um.
+      </div>
+    </div>
+  `;
+
+  const input = form.querySelector("input");
+
+  form.value = input.value;
+  input.oninput = () => {
+    form.value = input.value;
+  };
+
+  return form;
+}
+
+// variável “normal” com o valor atual do token
+token = userToken
+
+```
+
+## Column {width="55%" .no-scroll}
+
+```{ojs}
+// Converter milissegundos em mm:ss
+formatDuration = (ms) => {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = ((ms % 60000) / 1000).toFixed(0);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+// Renderização da lista
+{
+  // Criamos o container principal
+    const container = html`<div class="track-list-container">${topTracks.map(track => {
+        const row = html`
+            <div class="track-item ${track.id === selectedTrack.id ? 'active' : ''}">
+                <img class="track-img" src="${track.album.images[2]?.url}">
+                <div class="track-info">
+                    <div class="track-name">${track.name}</div>
+                    <div class="track-artist">${track.artists.map(a => a.name).join(', ')}</div>
+                </div>
+                <div class="track-duration">${formatDuration(track.duration_ms)}</div>
+            </div>`;
+        
+        row.onclick = () => {
+            mutable selectedTrack = track;
+        };
+        
+        return row;
+        })}
+        </div>`;
+
+    return container;
+}
+```
+
+# Top 10 of 2025
+
+## Column {width="25%"}
+
+### Row 
+
+```{ojs}
+//| output: false
+
+localAudioFiles = await fetch("assets/data/localTopTracks.json")
+  .then(response => response.json())
+  .catch(() => [])
+
+mutable selectedLocalTrack = null
+mutable audioSource = null
+
+mutable isPlaying = false
+mutable currentTrackIndex = 0
+
+mutable currentVolume = 50
+
+function updatePlayingState() {
+  if (window.__currentAudioProcessor) {
+    mutable isPlaying = window.__currentAudioProcessor.getIsPlaying();
+  }
+}
+
+```
+
+```{ojs}
+//| output: false
+
+// Play/Pause
+playPause = async () => {
+  if (!window.__currentAudioProcessor) return;
+  
+  await window.__currentAudioProcessor.resumeAudio();
+  updatePlayingState();
+}
+
+// Track anterior
+previousTrack = async () => {
+  if (localAudioFiles.length === 0) return;
+  
+  const newIndex = currentTrackIndex > 0 
+    ? currentTrackIndex - 1 
+    : localAudioFiles.length - 1;
+  
+  mutable currentTrackIndex = newIndex;
+  mutable selectedLocalTrack = localAudioFiles[newIndex];
+  mutable audioSource = localAudioFiles[newIndex];
+}
+
+// Próxima track
+nextTrack = async () => {
+  if (localAudioFiles.length === 0) return;
+  
+  const newIndex = (currentTrackIndex + 1) % localAudioFiles.length;
+  
+  mutable currentTrackIndex = newIndex;
+  mutable selectedLocalTrack = localAudioFiles[newIndex];
+  mutable audioSource = localAudioFiles[newIndex];
+  
+}
+
+```
+
+```{ojs}
+{
+  const container = html`<div class="track-list-container local-tracks">${localAudioFiles.map((track, index) => {
+    const row = html`
+      <div class="track-item ${track === selectedLocalTrack ? 'active' : ''}">
+        <img class="track-img" src="${track.img}">
+        <div class="track-info">
+          <div class="track-name">${track.name}</div>
+          <div class="track-artist">${track.artist}</div>
+        </div>
+        <div class="track-duration">${track.duration}</div>
+      </div>`;
+    
+    row.onclick = () => {
+      mutable currentTrackIndex = index;
+      mutable selectedLocalTrack = track;
+      mutable audioSource = track;
+    };
+    
+    return row;
+  })}</div>`;
+  return container;
+}
+
+```
+
+### Row { .no-scroll}
+
+```{ojs}
+
+// Controlos gerados com a ajuda de LLM
+viewof control = {
+  const controls = html`
+    <div class="audio-controls">
+      <button class="control-btn" title="Anterior">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+        </svg>
+      </button>
+      
+      <button class="control-btn control-btn-main" title="${isPlaying ? 'Pausar' : 'Reproduzir'}">
+        ${isPlaying 
+          ? html`<svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>`
+          : html`<svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>`
+        }
+      </button>
+      
+      <button class="control-btn" title="Próxima">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+        </svg>
+      </button>
+    </div>
+  `;
+  
+  const buttons = controls.querySelectorAll('.control-btn');
+  buttons[0].onclick = previousTrack;
+  buttons[1].onclick = playPause;
+  buttons[2].onclick = nextTrack;
+  
+  return controls;
+}
+
+viewof volumeSlider = {
+  const form = html`
+    <div class="volume-control">
+      <label class="volume-label">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        Volume
+      </label>
+      <div class="volume-slider-container">
+        <input 
+          type="range" 
+          min="0" 
+          max="100" 
+          step="1" 
+          value="50"
+          class="volume-slider">
+        <span class="volume-value">50%</span>
+      </div>
+    </div>
+  `;
+  
+  const input = form.querySelector('input');
+  const valueDisplay = form.querySelector('.volume-value');
+  
+  form.value = +input.value;
+  
+  input.oninput = () => {
+    form.value = +input.value;
+    valueDisplay.textContent = `${input.value}%`;
+    form.dispatchEvent(new Event('input'));
+  };
+  
+  return form;
+}
+
+
+viewof audioFile = {
+  const form = html`
+    <div class="audio-upload">
+      <label style="font-weight: 200; display: block;">
+        Escolha um ficheiro de áudio
+      </label>
+      <input 
+        type="file" 
+        accept="audio/*"
+        style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #444;">
+    </div>`;
+  
+  const input = form.querySelector("input");
+  form.value = null;
+  
+  input.onchange = () => {
+    form.value = input.files;
+  };
+  
+  return form;
+}
+```
+
+```{ojs}
+//| output: false
+
+{
+  const handleKeyPress = (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    
+    if (e.code === 'Space') {
+      e.preventDefault();
+      playPause();
+    } else if (e.code === 'ArrowLeft') {
+      e.preventDefault();
+      previousTrack();
+    } else if (e.code === 'ArrowRight') {
+      e.preventDefault();
+      nextTrack();
+    }
+  };
+  
+  document.addEventListener('keydown', handleKeyPress);
+  return "Atalhos de teclado ativados";
+}
+
+```
+
+## Column
+
+```{ojs}
+
+html`<canvas id="canva"></canvas>`
+
+```
+
+```{ojs}
+//| output: false
+
+{
+  const { AudioProcessor } = await import('/assets/js/AudioProcessor.js');
+  const { VisualizationEngine } = await import('/assets/js/VisualizationEngine.js')
+
+  window.AudioProcessor = AudioProcessor;
+  window.VisualizationEngine = VisualizationEngine;
+
+  window.__currentAudioProcessor = null;
+}
+{
+  if (audioFile?.length > 0) {
+    mutable audioSource = audioFile[0];
+  }
+  return
+}
+{
+  mutable currentVolume = volumeSlider;
+  
+  if (window.__currentAudioProcessor) {
+    window.__currentAudioProcessor.calculateAudioLevel(volumeSlider);
+    console.log("Volume definido para:", volumeSlider + "%");
+  }
+}
+```
+
+```{ojs}
+//| output: false
+
+async function loadSourceAsFile(source) {
+  
+  if (source instanceof File) {
+    return source;
+  }
+
+  if (source?.path) {
+    const response = await fetch(source.path);
+    const blob = await response.blob();
+
+    return new File(
+      [blob],
+      source.name ?? "audio.mp3",
+      { type: blob.type || "audio/mpeg" }
+    );
+  }
+
+  throw new Error("Fonte de áudio inválida");
+}
+
+```
+
+```{ojs}
+//| output: false
+
+{
+  if (!audioSource || !window.AudioProcessor) {
+    return html`<div style="color:#b3b3b3;">Aguarda carregamento...</div>`;
+  }
+
+  if (window.__currentAudioProcessor) {
+    try {
+      window.__currentAudioProcessor.stop?.();
+      window.__currentAudioProcessor.audioContext?.close?.();
+    } catch (e) {}
+    window.__currentAudioProcessor = null;
+  }
+  
+  const file = await loadSourceAsFile(audioSource);
+  
+  const audioProcessor = new window.AudioProcessor();
+
+  await audioProcessor.loadAudioFile(file);
+
+  window.__currentAudioProcessor = audioProcessor;
+  
+  // Atualizar estado
+  mutable isPlaying = true;
+  
+  const visualizer = new window.VisualizationEngine("canva", audioProcessor);
+  
+  visualizer.setVisualization("waveform");
+}
+
+```
